@@ -1,3 +1,4 @@
+version: '3'
 services:
   db:
     command: --default-authentication-plugin=mysql_native_password
@@ -5,9 +6,10 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: micrometric
       MYSQL_DATABASE: micrometric
+      MYSQL_TCP_PORT: 3312
     image: mysql
     ports:
-      - "3312:3306"
+      - 3312:3306
     restart: always
     volumes:
       - ./micrometricdb:/var/lib/mysql
@@ -16,12 +18,22 @@ services:
     image: micromet:latest
     depends_on:
       - db
+    ports:
+      - 8069:80
     expose:
-      - 80
+      - 8069
     restart: always
     volumes:
       - ./:/var/www/html
-networks:
-  default:
-    external:
-      name: biovision
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - 6969:80
+    environment:
+      - PMA_HOST=db
+      - PMA_PORT=3312
+#networks:
+#  default:
+#    external:
+#      name: biovision
