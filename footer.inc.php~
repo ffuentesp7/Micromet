@@ -1,0 +1,23 @@
+<div class="footer">
+	<p>Copyright &copy; <?=date('Y')?> CITRA - <a href="http://www.utalca.cl">Universidad de Talca</a>&nbsp;&nbsp;|&nbsp;&nbsp;Todos los Derechos Reservados</p>
+	<p class="credits">Dise&ntilde;ado por <a href="http://1234.info/" title="Designer Homepage">1234.info</a> | Modificado por <a href="mailto:roaguilar@utalca.cl" title="roaguilar@utalca.cl">Rodrigo Aguilar</a> | <a href="http://validator.w3.org/check?uri=referer" title="Validate XHTML code">XHTML 1.0</a> | <a href="http://jigsaw.w3.org/css-validator/" title="Validate CSS code">CSS 2.0</a></p>
+	<p class="credits">Optimizado para resoluci&oacute;n 1024x768</p>
+</div>
+<div class="corner-page-bottom"></div>
+<!--[if lt IE 9]>
+	<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative; margin-bottom: 30px;'>
+		<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='img/noie6/ie6nomore-cornerx.jpg' style='border: none;' alt='Cierra este aviso'/></a></div>
+			<div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+			<div style='width: 75px; float: left;'><img src='img/noie6/ie6nomore-warning.jpg' alt='Aviso' style="border: none;"/></div>
+			<div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+			<div style='font-size: 14px; font-weight: bold; margin-top: 2px;'>Usted est&aacute; usando un navegador desactualizado.</div>
+			<div style='font-size: 12px; margin-top: 1px; line-height: 12px;'>Para tener una mejor experiencia en Eve, por favor, actualice su navegador a la ultima versi&oacute;n o c&aacute;mbielo por una de estas alternativas.</div>
+		</div>
+			<div style='width: 60px; float: left;'><a href='http://www.mozilla-europe.org/es/firefox/' target='_blank'><img src='img/noie6/ie6nomore-firefox.jpg' style='border: none;' alt='Descargar la ultima version de Firefox'/></a></div>
+			<div style='width: 60px; float: left;'><a href='http://windows.microsoft.com/es-ES/windows/downloads?T1=downloadsIE' target='_blank'><img src='img/noie6/ie6nomore-ie.jpg' style='border: none;' alt='Descargar la ultima version de Internet Explorer'/></a></div>
+			<div style='width: 60px; float: left;'><a href='http://www.apple.com/es/safari/download/' target='_blank'><img src='img/noie6/ie6nomore-safari.jpg' style='border: none;' alt='Descargar la ultima version de Safari'/></a></div>
+			<div style='width: 60px; float: left;'><a href='http://www.opera.com/browser/download/' target='_blank'><img src='img/noie6/ie6nomore-opera.jpg' style='border: none;' alt='Descargar la ultima version de Opera'/></a></div>
+			<div style='float: left;'><a href='http://www.google.com/chrome?hl=es' target='_blank'><img src='img/noie6/ie6nomore-chrome.jpg' style='border: none;' alt='Descargar la ultima version de  Google Chrome'/></a></div>
+		</div>
+	</div>
+<![endif]-->

@@ -1,0 +1,13 @@
+<?php
+	require('funciones.inc.php');
+
+	$ACCION = $_GET['accion'];
+	
+	if($ACCION == ""){
+	
+	}
+	else{
+	
+	}
+
+?>

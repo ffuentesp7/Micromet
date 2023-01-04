@@ -1,0 +1,145 @@
+<?php
+	require('aut_logout.php');
+	
+	if(check_mysql()){
+		estadisticas('WEB','UNIQUE_PAGE_VIEW');
+		$SYSTEM_ENABLE = get_parameter('SYSTEM_ENABLE');
+	}
+	
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+
+<!--  Version: Multiflex-5.4 / Overview                     -->
+<!--  Date:    Nov 23, 2010                                 -->
+<!--  Design:  www.1234.info                                -->
+<!--  Modified:  roaguilar@utalca.cl                        -->
+<!--  License: Fully open source without restrictions.      -->
+
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=iso 8859-2" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="3600" />
+		<meta name="revisit-after" content="2 days" />
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="copyright" content="Micromet - Biovisión" />
+		
+		<meta name="distribution" content="global" />
+		<meta name="description" content="Electronic Visualisation Environment" />
+		<meta name="keywords" content="vizualizaci�n, agua, agricultura, agroclimatolog�a, climatolog�a" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf54_reset.css" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf54_grid_nosidebar.css" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf54_content_nosidebar.css" />
+		<link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+		<script src="js/validaciones.js" type="text/javascript"></script>
+		<script src="js/jquery.js" type="text/javascript"></script>
+		<title>EVE - Electronic Visualisation Environment - Entorno de Visualizaci&oacute;n Electr&oacute;nico</title>
+	</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+	<body>
+		<!-- CONTAINER FOR ENTIRE PAGE -->
+		<div class="container">
+
+    			<!-- A. HEADER -->         
+			<div class="corner-page-top"></div>        
+			<div class="header">
+				<div class="header-top">
+        
+        				<!-- A.1 SITENAME -->      
+        				<?php require('sitename.inc.php'); ?>
+    
+        				<!-- A.2 BUTTON NAVIGATION -->
+        				<div class="navbutton">
+          					<ul>
+            						<li><a href="http://translate.google.cl/translate?hl=es&sl=es&tl=en&u=http%3A%2F%2Fwww.citrautalca.cl%2Feve" title="English"><img src="./img/icon_flag_us.gif" alt="Flag" /></a></li>
+            						<li><a href="http://translate.google.cl/translate?hl=es&sl=es&tl=de&u=http%3A%2F%2Fwww.citrautalca.cl%2Feve" title="Deutsch"><img src="./img/icon_flag_de.gif" alt="Flag" /></a></li>
+          					</ul>
+        				</div>
+
+					<!-- A.3 GLOBAL NAVIGATION -->
+        				<div class="navglobal">
+          					<ul>
+            						<li><a href="#" title="">Acerca de...</a></li>
+							<li><a href="#" title="">Contacto</a></li>							            
+          					</ul>
+        				</div>        
+      				</div>
+    			</div>
+    			<div class="corner-page-bottom"></div>    
+    
+    			<!-- B. NAVIGATION BAR -->
+			<?php require_once('menu_index.inc.php') ?>    
+  
+			<!-- C. MAIN SECTION -->      
+			<div class="main">
+
+				<!-- C.1 CONTENT -->
+				<div class="content">
+
+				<!-- ************************************************************ -->
+				<!-- **   3-08. LOGIN FORM                                     ** -->
+				<!-- ************************************************************ --> 
+					
+					<!-- CONTENT CELL -->                        
+					<a id="anchor-text-1"></a>
+					<div class="corner-content-1col-top"></div>                        
+					<div class="content-1col-nobox">
+						<h1>Participantes</h1>
+						<h2>Meteovid</h2>
+						<h4>La Red Meteorol&oacute;gica de Vinos de Chile</h4>
+						<p style="text-align: justify;"><strong><img src="http://www.agrys.cl/images/frost.png" border="0" width="119" height="119" style="float: left; border: 0;" />Meteovid</strong> es la  primera red de estaciones meteorol&oacute;gicas de la industria del vino formada  por los <a href="http://www.vinnova.cl">Consorcios del Vino, Vinnova , Tecnovid </a>y Vinos de Chile A.G  que abarca desde el Valle de Elqui hasta el Valle del B&iacute;o B&iacute;o y cuenta  con 56 estaciones marca <a href="http://www.adcon.at/">ADCON</a> de  &uacute;ltima generaci&oacute;n.</p>
+						<p style="text-align: justify;">Esta red provee a todas las vi&ntilde;as de informaci&oacute;n  meteorol&oacute;gica en l&iacute;nea y en tiempo real: una general que es de libre  acceso, y otra Premium que entregar&aacute; servicios espec&iacute;ficos.</p>
+						
+						<p style="text-align: justify;">Las estaciones son ADCON con sistema GPRS, cada equipo env&iacute;a sus datos a un servidor central donde el software addVANTAGE PRO 6.1 almacena y procesa los datos. El mismo software administra el acceso libre o p&uacute;blico por medio del m&oacute;dulo LiveData.</p>
+						<p><strong>&iquest;C&oacute;mo surge Meteovid&#063;</strong></p>
+						<p style="text-align: justify;">Meteovid surgi&oacute; gracias al financiamiento de <a href="http://www.corfo.cl">INNOVA CORFO</a> para un proyecto presentados por los Consorcios junto con la empresa ADCON y Vinos de Chile.<br /><br />Este proyecto tiene una duraci&oacute;n de 21 meses y financia la compra de 33 estaciones meteorol&oacute;gicas que se ubicar&aacute;n en nuestras vi&ntilde;as de acuerdo al an&aacute;lisis t&eacute;nico que elaborar&aacute;n profesionales de la <a href="http://www.citrautalca.cl">Universidad de Talca</a>. Esta red adem&aacute;s considera la participaci&oacute;n de 23 privados los cuales aportan sus estaciones.</p>
+						<p style="text-align: justify;">El objetivo general es mejorar la competitividad de los productores vitivin&iacute;colas a trav&eacute;s de la implementaci&oacute;n de &iacute;ndices bioclim&aacute;ticos e informaci&oacute;n clim&aacute;tica procesada para la caracterizaci&oacute;n de los terroirs vitivin&iacute;colas de Chile y para apoyar la toma de decisiones de manejo del vi&ntilde;edo.</p>
+						<p class="demo"></p>   
+						<h2>SEPOR</h2>
+						<h4>Servicio de Programaci&oacute;n y Optimizaci&oacute;n del Uso del Agua de Riego</h4>
+						
+						<p>&nbsp;&nbsp;&nbsp;&nbsp;El "Servicio de Programaci&oacute;n y Optimizaci&oacute;n del Uso del Agua de Riego en las &aacute;reas regadas del R&iacute;o Cachapoal (2&ordf; secci&oacute;n) en la VI Regi&oacute;n, y Maule Norte y Longav&iacute; en la VII Regi&oacute;n" <b>(SEPOR)</b> es un proyecto de la Comisi&oacute;n Nacional de Riego <b><a href="http://www.chileriego.cl">(CNR)</a></b>, ejecutado por el Centro de Investigaci&oacute;n y Transferencia en Riego y Agroclimatolog&iacute;a <b><a href="http://www.citrautalca.cl">(CITRA)</a></b> de la Universidad de Talca.<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;El SEPOR consta de un sistema inform&aacute;tico para la gesti&oacute;n h&iacute;drica, que permite entregar a los productores informaci&oacute;n clim&aacute;tica b&aacute;sica (temperatura, humedad relativa, velocidad del viento, radiaci&oacute;n solar y precipitaciones) y procesada (evapotranspiraci&oacute;n, tiempos de riego y frecuencias de riego) para programar el riego de los cultivos, hortalizas, frutales y vi&ntilde;a.<br /><br />&nbsp;&nbsp;&nbsp;&nbsp;El proyecto considera la ejecuci&oacute;n de tres etapas b&aacute;sicas:</p>
+						<p><b>1. La implementaci&oacute;n del equipamiento necesario:</b> el montaje, instalaci&oacute;n y puesta en marcha del SEPOR en las &aacute;reas regadas por los r&iacute;os Cachapoal (2&ordf; secci&oacute;n), Maule Norte y Longav&iacute;.</p>	
+						<p><b>2. La implementaci&oacute;n y puesta en operaci&oacute;n de un servicio especializado</b>, orientado a asistir los requerimientos de programaci&oacute;n y optimizaci&oacute;n del uso del agua de riego a un conjunto de explotaciones agr&iacute;colas en las &aacute;reas seleccionadas, mediante la puesta a disposici&oacute;n, en beneficio de los agricultores, de un sistema de informaci&oacute;n en tiempo real de dosis y frecuencias de riego, orientado a satisfacer regular y eficientemente, en cantidad y oportunidad, los requerimientos de agua de los cultivos, en las diferentes etapas de su desarrollo.</p>
+						<p><b>3. Implementaci&oacute;n y desarrollo un programa de transferencia t&eacute;cnica</b> para capacitar a los agricultores en la utilizaci&oacute;n adecuada del SEPOR y tecnolog&iacute;as de riego.</p>
+
+						
+						
+					</div> 
+					<div class="corner-content-1col-bottom"></div>  
+
+            				<!-- END OF CONTENT -->
+    				</div>
+    			</div>
+			<!-- D. FOOTER -->      
+			<?php require('footer.inc.php');?>
+			<!--[if lt IE 9]>
+				<div style='border: 1px solid #F7941D; background: #FEEFDA; text-align: center; clear: both; height: 75px; position: relative; margin-bottom: 30px;'>
+					<div style='position: absolute; right: 3px; top: 3px; font-family: courier new; font-weight: bold;'><a href='#' onclick='javascript:this.parentNode.parentNode.style.display="none"; return false;'><img src='img/noie6/ie6nomore-cornerx.jpg' style='border: none;' alt='Cierra este aviso'/></a></div>
+						<div style='width: 640px; margin: 0 auto; text-align: left; padding: 0; overflow: hidden; color: black;'>
+						<div style='width: 75px; float: left;'><img src='img/noie6/ie6nomore-warning.jpg' alt='Aviso' style="border: none;"/></div>
+						<div style='width: 275px; float: left; font-family: Arial, sans-serif;'>
+						<div style='font-size: 14px; font-weight: bold; margin-top: 2px;'>Usted est&aacute; usando un navegador desactualizado.</div>
+						<div style='font-size: 12px; margin-top: 1px; line-height: 12px;'>Para tener una mejor experiencia en Eve, por favor, actualice su navegador a la ultima versi&oacute;n o c&aacute;mbielo por una de estas alternativas.</div>
+					</div>
+						<div style='width: 60px; float: left;'><a href='http://www.mozilla-europe.org/es/firefox/' target='_blank'><img src='img/noie6/ie6nomore-firefox.jpg' style='border: none;' alt='Descargar la ultima version de Firefox'/></a></div>
+						<div style='width: 60px; float: left;'><a href='http://windows.microsoft.com/es-ES/windows/downloads?T1=downloadsIE' target='_blank'><img src='img/noie6/ie6nomore-ie.jpg' style='border: none;' alt='Descargar la ultima version de Internet Explorer'/></a></div>
+						<div style='width: 60px; float: left;'><a href='http://www.apple.com/es/safari/download/' target='_blank'><img src='img/noie6/ie6nomore-safari.jpg' style='border: none;' alt='Descargar la ultima version de Safari'/></a></div>
+						<div style='width: 60px; float: left;'><a href='http://www.opera.com/browser/download/' target='_blank'><img src='img/noie6/ie6nomore-opera.jpg' style='border: none;' alt='Descargar la ultima version de Opera'/></a></div>
+						<div style='float: left;'><a href='http://www.google.com/chrome?hl=es' target='_blank'><img src='img/noie6/ie6nomore-chrome.jpg' style='border: none;' alt='Descargar la ultima version de  Google Chrome'/></a></div>
+					</div>
+				</div>
+			<![endif]-->
+		</div> 
+	</body>
+</html>
+
+
+

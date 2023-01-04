@@ -1,0 +1,14 @@
+[00] Bad URL
+[01] Session Close
+[02] Unknown function
+[03] There is no key available
+[04] The key is not valid. You must obtain a new.
+[05] User does not exists
+[06] Password is incorrect
+[07] MySQL Error
+
+URL
+
+adDI.php?function=login&user=&pass=
+adDI.php?function=logout&session-id=
+adDI.php?function=getdatabaseconnection=&var=&session-id=

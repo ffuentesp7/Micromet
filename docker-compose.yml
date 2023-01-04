@@ -1,0 +1,27 @@
+services:
+  db:
+    command: --default-authentication-plugin=mysql_native_password
+    container_name: micrometricdb
+    environment:
+      MYSQL_ROOT_PASSWORD: micrometric
+      MYSQL_DATABASE: micrometric
+    image: mysql
+    ports:
+      - "3312:3306"
+    restart: always
+    volumes:
+      - ./micrometricdb:/var/lib/mysql
+  www:
+    container_name: micrometricwww
+    image: micromet:latest
+    depends_on:
+      - db
+    expose:
+      - 80
+    restart: always
+    volumes:
+      - ./:/var/www/html
+networks:
+  default:
+    external:
+      name: biovision

@@ -1,0 +1,228 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+
+
+<!--  Version: Multiflex-5.4 / Overview                     -->
+<!--  Date:    Nov 23, 2010                                 -->
+<!--  Design:  www.1234.info                                -->
+<!--  Modified:  roaguilar@utalca.cl                        -->
+<!--  License: Fully open source without restrictions.      -->
+
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=iso 8859-2" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="3600" />
+		<meta name="revisit-after" content="2 days" />
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="copyright" content="Micromet - Biovisión" />
+		
+		<meta name="distribution" content="global" />
+		<meta name="description" content="Electronic Visualisation Environment" />
+		<meta name="keywords" content="vizualizaci�n, agua, agricultura, agroclimatolog�a, climatolog�a" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf54_reset.css" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf54_grid_nosidebar.css" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="./css/mf54_content_nosidebar.css" />
+		<link rel="icon" type="image/x-icon" href="./img/favicon.ico" />
+		<script src="js/validaciones.js" type="text/javascript"></script>
+		<script src="js/jquery.js" type="text/javascript"></script>
+		<title>EVE - Electronic Visualisation Environment - Entorno de Visualizaci&oacute;n Electr&oacute;nico</title>
+	</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+	<body>
+		<!-- CONTAINER FOR ENTIRE PAGE -->
+		<div class="container">
+
+    			<!-- A. HEADER -->         
+			<div class="corner-page-top"></div>        
+			<div class="header">
+				<div class="header-top">
+        
+        				<!-- A.1 SITENAME -->      
+        				<?php require('sitename.inc.php'); ?>
+    
+        				<!-- A.2 BUTTON NAVIGATION -->
+        				<div class="navbutton">
+          					<ul>
+            						<li><a href="http://translate.google.cl/translate?hl=es&sl=es&tl=en&u=http%3A%2F%2Fwww.citrautalca.cl%2Feve" title="English"><img src="./img/icon_flag_us.gif" alt="Flag" /></a></li>
+            						<li><a href="http://translate.google.cl/translate?hl=es&sl=es&tl=de&u=http%3A%2F%2Fwww.citrautalca.cl%2Feve" title="Deutsch"><img src="./img/icon_flag_de.gif" alt="Flag" /></a></li>
+          					</ul>
+        				</div>
+
+					<!-- A.3 GLOBAL NAVIGATION -->
+        				<div class="navglobal">
+          					<ul>
+            						<li><a href="#" title="">Acerca de...</a></li>
+							<li><a href="#" title="">Contacto</a></li>							            
+          					</ul>
+        				</div>        
+      				</div>
+    			</div>
+    			<div class="corner-page-bottom"></div>    
+    
+    			<!-- B. NAVIGATION BAR -->
+			<?php require_once('menu_index.inc.php') ?>
+  
+			<!-- C. MAIN SECTION -->      
+			<div class="main">
+				<h1 class="pagetitle">Pron&oacute;sticos del CITRA</h1>
+
+				<!-- C.1 CONTENT -->
+				<div class="content">
+
+				<!-- ************************************************************ -->
+				<!-- **   3-08. LOGIN FORM                                     ** -->
+				<!-- ************************************************************ --> 
+					
+					<a id="anchor-grid-501"></a>
+					<div class="corner-content-1col-top"></div>                        
+					<div class="content-1col-nobox">
+						<h1>Pron&oacute;stico del Tiempo para la Regi&oacute;n del Maule</h1>
+						<h2>por el profesor Patricio Gonz&aacute;lez.</h2>  
+						<p>
+							<span id="pronostico_tiempo"></span>
+							<?php
+							$msn = '';
+							
+							include '../intranet/configuracion.php';
+							include '../intranet/lib/funciones.php';
+							if ( is_file( '../intranet/'.$cfg['pro_file'] )  ){
+	
+								$datos = @file( '../intranet/'.$cfg['pro_file'] );
+								$key = arregloBuscarPosicion(date('Y-m-d'), $datos);
+								
+								if( $key !== false ){
+									$data = explode("|", $datos[$key]); 
+									//$titulo = $data[3];
+									$fpronostico = $data[0];
+									$t_min = $data[1];
+									$t_min_hora = $data[2];
+									$t_min_minuto = $data[3];
+									$t_max = $data[4];
+									$t_max_hora = $data[5];
+									$t_max_minuto = $data[6];
+									$humedad = $data[7];
+									$presion = $data[8];
+									$evapora = $data[9];
+									$pre_lluvia = $data[10];
+									$pre_total = $data[11];
+									$pre_normal = $data[12];
+									$pre_super = $data[13];
+									$pre_super_eq = $data[14];
+									$pre_def = $data[15];
+									$pre_def_eq = $data[16];
+									$content = $data[17];
+									$estimacion = $data[18];
+									
+								}else{
+									$msn = 'No hay pron&oacute;stico por el momento.';
+								}		
+							}else{
+								$msn = 'No hay pron&oacute;stico por el momento.';
+							}
+							
+							if($msn != ''){
+								echo $msn.'</p>';
+							}
+							else{
+							?>
+						</p>
+						<table>
+							<tr>
+								<td colspan="2">
+									<p><b>Pron&oacute;stico para el dia <?=date('d/m/Y')?></b></p>
+								</td>
+							</tr>
+							<tr>
+								<td style="background: #eee;" colspan="2">
+									<p><?=$content?></p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<p><b>Estimacion para 3 d�as</b></p>
+								</td>
+							</tr>
+							<tr>
+								<td style="background: #eee;" colspan="2">
+									<p><?=$estimacion?></p>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2"><p><b>Datos Meteorol&oacute;gicos para hoy </b></p> </td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;Temperatura M&iacute;nima </td>
+								<td><?= $t_min .' &ordm;C a las '. $t_min_hora .':'. $t_min_minuto .' Hrs.';?></td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;Temperatura M&aacute;xima Ayer </td>
+								<td><?= $t_max .' &ordm;C a las '. $t_max_hora .':'. $t_max_minuto .' Hrs.';?> </td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;Humedad Relativa del Aire </td>
+								<td><?= $humedad;?>% </td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;Presi&oacute;n Atmosf&eacute;rica </td>
+								<td><?= $presion;?> Hectopascales </td>
+							</tr>
+							<tr>
+								<td>&nbsp;&nbsp;Evaporaci&oacute;n</td>
+								<td><?= $evapora;?> mm </td>
+							</tr>
+							<tr>
+								<td colspan="2">&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="2"><p>&nbsp;Precipitaciones</p></td>
+							</tr>
+							<tr>
+								<td>&nbsp;Ultima Lluvia </td>
+								<td><?= $pre_lluvia;?> mm </td>
+							</tr>
+							<tr>
+								<td>&nbsp;Total a la Fecha </td>
+								<td><?= $pre_total;?> mm </td>
+							</tr>
+							<tr>
+								<td>&nbsp;Normal a la Fecha </td>
+								<td><?= $pre_normal;?> mm </td>
+							</tr>
+							<tr>
+								<td>&nbsp;Superavit</td>
+								<td><?= $pre_super;?> mm </td>
+							</tr>
+							<tr>
+								<td>&nbsp;Equivalen al </td>
+								<td><?= $pre_super_eq;?> %</td>
+							</tr>
+							<tr>
+								<td>&nbsp;D&eacute;ficit</td>
+								<td><?= $pre_def;?> mm </td>
+							</tr>
+							<tr>
+								<td>&nbsp;Equivalen al </td>
+								<td><?= $pre_def_eq;?> %</td>
+							</tr>
+						</table>
+						<?php
+						}
+						?>
+					</div>
+					<div class="corner-content-1col-bottom"></div>
+            				<!-- END OF CONTENT -->
+    				</div>
+    			</div>
+			<!-- D. FOOTER -->      
+			<?php require('footer.inc.php');?>
+		</div> 
+	</body>
+</html>
+
+
+
