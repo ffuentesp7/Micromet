@@ -1,0 +1,333 @@
+<?php
+	require('../aut_verifica.inc.php');
+	require('../funciones.inc.php');
+	check_admin($_SESSION['session_nombre_sesion']);
+	estadisticas('WEB','PAGE_VIEW');
+	estadisticas('ADMIN_USE','PERMISOS');
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!--  Version: Multiflex-5.4 / Overview                     -->
+<!--  Date:    Nov 23, 2010                                 -->
+<!--  Design:  www.1234.info                                -->
+<!--  Modified:  roaguilar@utalca.cl                        -->
+<!--  License: Fully open source without restrictions.      -->
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=iso 8859-2" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="3600" />
+		<meta name="revisit-after" content="2 days" />
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="copyright" content="Micromet - Biovisión" />
+		
+		<meta name="distribution" content="global" />
+		<meta name="description" content="Electronic Visualisation Environment" />
+		<meta name="keywords" content="vizualizaci�n, agua, agricultura, agroclimatolog�a, climatolog�a" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_reset.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_grid.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_content.css" />
+		<link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+		<?php require_once('../head.link.script.php'); ?>
+		<script src="permisos.js" type="text/javascript"></script>
+		<title>eVE - Electronic Visualisation Environment - Entorno de Visualizaci&oacute;n Electr&oacute;nico</title>
+	</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+	<body>
+		<!-- CONTAINER FOR ENTIRE PAGE -->
+		<div class="container">
+
+    			 <!-- B. NAVIGATION BAR -->
+			 <?php require('../system/navigation_bar.inc.php'); ?>   
+  
+			<!-- C. MAIN SECTION -->      
+			<div class="main">
+
+				<!-- C.1 CONTENT -->
+				<div class="content">
+					 <!-- CONTENT CELL -->                
+					<a id="anchor-heading-1"></a>
+					<div class="corner-content-1col-top"></div>                        
+					<div class="content-1col-nobox">
+						<?php
+						
+						$PAGE = "main";
+						if(isset($_GET['page']))
+							$PAGE = $_GET['page'];
+						
+						if( $PAGE == "main"){
+						?>
+						<h1 class="webtemplate" id="top_title">Permisos</h1>
+						<table style="width: auto; background-color: #fff;">
+							<tr>
+								<td class="whitenoborder"><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=usuario" onmouseover="javascript: swapText('top_title','Permisos de Usuarios');" onmouseout="javascript: swapText('top_title','Permisos');"><img class="blueborder" src="../img/actionicons/user_permission.png" /></a></td>
+								<td class="whitenoborder"><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=estacion" onmouseover="javascript: swapText('top_title','Permisos de Estaci&oacute;n');" onmouseout="javascript: swapText('top_title','Permisos');"><img class="blueborder" src="../img/actionicons/station_permission.png" /></a></td>
+								<td class="whitenoborder"><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=tipousuario" onmouseover="javascript: swapText('top_title','Tipos de Permisos de Usuarios');" onmouseout="javascript: swapText('top_title','Permisos');"><img class="blueborder" src="../img/actionicons/users.png" /></a></td>
+								<td class="whitenoborder"><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=tipoestacion" onmouseover="javascript: swapText('top_title','Tipos de Permisos de Estaci&oacute;n');" onmouseout="javascript: swapText('top_title','Permisos');"><img class="blueborder" src="../img/actionicons/station.png" /></a></td>
+								<td class="whitenoborder"><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=ver" onmouseover="javascript: swapText('top_title','Ver Tipos de Permisos');" onmouseout="javascript: swapText('top_title','Permisos');"><img class="blueborder" src="../img/actionicons/permission.png" /></a></td>
+							</tr>
+						</table>
+						<?php
+						}
+						elseif( $PAGE == "usuario"){
+						?>
+						<h1 class="webtemplate" id="top_title">Permisos de Usuario</h1>
+						<p><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Otorgar Permisos&nbsp;</legend>
+									<p>
+										<label for="nombre_usuario" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre_usuario" id="nombre_usuario" readonly="true" />
+										<a href="usuarios.lista.php?sid=<?=$_SESSION['session_nombre_sesion']?>&keepThis=true&TB_iframe=true&height=400&width=500" title="Seleccione Usuario" class="thickbox">&#091;Seleccionar Usuario&#093;</a>
+									</p>
+									<p>
+										<label for="usuario_id" class="left">Usuario ID</label>
+										<input readonly="true" type="text" class="field" style="width: 75px;" name="usuario_id" id="usuario_id" />
+									</p>
+									<p>
+										<label for="permisos" class="left">Permiso:</label>
+										<select name="permisos" id="permisos">
+											<option>PERMISO</option>
+										</select>
+										<a href="#" id="boton_otorgar_permiso" title="Otorgar Permiso">&#091;Otorgar Permiso&#093;</a>
+									</p>									
+								</fieldset>
+							</form>
+						</div>
+						<h2 class="webtemplate" id="top_title">Permisos Otorgados</h2>
+						<span id="contenido"></span>
+						<table style='width: 90%;' id="tabla_permisos_otorgados">
+							<tr>
+								<th class='top' scope='col'>Nombre</th>
+								<th class='top' scope='col'>C&oacute;digo</th>
+								<th class='top' scope='col'>Valor</th>
+								<th class='top' scope='col'>Quitar</th>
+							</tr>
+						</table>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#boton_otorgar_permiso').bind('click',function(e){
+									giveUserPermission();
+								});
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "estacion"){
+						?>
+						<h1 class="webtemplate" id="top_title">Permisos de Estacion</h1>
+						<p><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Otorgar Permisos&nbsp;</legend>
+									<p>
+										<label for="nombre_estacion" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre_estacion" id="nombre_estacion" readonly="true" />
+										<a href="estaciones.lista.php?class=ownpermission&sid=<?=$_SESSION['session_nombre_sesion']?>&keepThis=true&TB_iframe=true&height=400&width=500" title="Seleccione Estaci&oacute;n" class="thickbox">&#091;Seleccionar Estaci&oacute;n&#093;</a>
+									</p>
+									<p>
+										<label for="estacion_id" class="left">Estacion ID</label>
+										<input readonly="true" type="text" class="field" style="width: 75px;" name="estacion_id" id="estacion_id" />
+									</p>
+									<p>
+										<label for="permisos" class="left">Permiso:</label>
+										<select name="permisos" id="permisos">
+											<option>PERMISO</option>
+										</select>
+										<a href="#" id="boton_otorgar_permiso" title="Otorgar Permiso">&#091;Otorgar Permiso&#093;</a>
+									</p>									
+								</fieldset>
+							</form>
+						</div>
+						<h2 class="webtemplate" id="top_title">Permisos Otorgados</h2>
+						<span id="contenido"></span>
+						<table style='width: 90%;' id="tabla_permisos_otorgados">
+							<tr>
+								<th class='top' scope='col'>Nombre</th>
+								<th class='top' scope='col'>C&oacute;digo</th>
+								<th class='top' scope='col'>Valor</th>
+								<th class='top' scope='col'>Quitar</th>
+							</tr>
+						</table>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#boton_otorgar_permiso').bind('click',function(e){
+									giveStationPermission();
+								});
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "tipousuario"){
+						?>
+						<h1 class="webtemplate" id="top_title">Tipo de Permisos de Usuario</h1>
+						<p><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Datos de Tipo de Permiso&nbsp;</legend>
+									<p>
+										<label for="nombre" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre" id="nombre_tipo_permiso" />
+									</p>
+									<p>
+										<label for="codigo" class="left">C&oacute;digo:</label>
+										<input type="text" class="field" name="codigo" id="codigo_tipo_permiso" />
+									</p>
+									<p>
+										<label for="valor" class="left">Valor:</label>
+										<input type="text" class="field" name="valor" id="valor_tipo_permiso" />
+									</p>
+									<p>
+										<input type="button" class="button" value="Ingresar" id="boton_ingresar_permiso" />
+									</p>
+									<p><a href="estaciones.lista.php?sid=<?=$_SESSION['session_nombre_sesion']?>&keepThis=true&TB_iframe=true&height=400&width=500" title="Seleccione Estaci&oacute;n" class="thickbox">&#091;Obtener desde Estaci&oacute;n&#093;</a></p>
+								</fieldset>
+							</form>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#boton_ingresar_permiso').bind('click',function(e){
+									addUserTypePermission();
+								});
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "tipoestacion"){
+						?>
+						<h1 class="webtemplate" id="top_title">Tipo de Permisos de Estacion</h1>
+						<p><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Datos de Tipo de Permiso&nbsp;</legend>
+									<p>
+										<label for="nombre" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre" id="nombre_tipo_permiso" />
+									</p>
+									<p>
+										<label for="codigo" class="left">C&oacute;digo:</label>
+										<input type="text" class="field" name="codigo" id="codigo_tipo_permiso" />
+									</p>
+									<p>
+										<label for="valor" class="left">Valor:</label>
+										<input type="text" class="field" name="valor" id="valor_tipo_permiso" />
+									</p>
+									<p>
+										<input type="button" class="button" value="Ingresar" id="boton_ingresar_permiso" />
+									</p>
+								</fieldset>
+							</form>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#boton_ingresar_permiso').bind('click',function(e){
+									addStationTypePermission();
+								});
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "ver"){
+						?>
+						<h1 class="webtemplate" id="top_title">Tipo de Permisos</h1>
+						<p><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Datos de Tipo de Permiso&nbsp;</legend>
+									<p>
+										<label for="tipo_de_permiso" class="left">Tipo:</label>
+										<select name="tipo_de_permiso" id="tipo_de_permiso">
+											<option value="usuario">USUARIO</option>
+											<option value="estacion">ESTACI&Oacute;N</option>
+										</select>
+									</p>
+									<p>
+										<input type="button" class="button" value="Mostrar" id="boton_mostrar_permisos" />
+									</p>
+								</fieldset>
+							</form>
+						</div>
+						<span id="contenido"></span>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#boton_mostrar_permisos').bind('click',function(e){
+									seePermissions();
+								});
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "edit"){
+							$SQL = "SELECT id,nombre,code,value FROM eve_tipo_de_permiso_".$_GET['tipo']." WHERE id=".$_GET['id'];
+							
+							$result_tipo_de_permiso = consulta_sql($SQL);
+							
+							$datos_tipo_de_permiso = mysqli_fetch_array($result_tipo_de_permiso);
+						
+						?>
+						<h1 class="webtemplate" id="top_title">Editar Tipo de Permiso</h1>
+						<p><a href="../admin/permisos.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=ver">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Datos de Tipo de Permiso&nbsp;</legend>
+									<p>
+										<label for="nombre" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre" id="nombre_tipo_permiso" value="<?=$datos_tipo_de_permiso['nombre']?>" />
+									</p>
+									<p>
+										<label for="codigo" class="left">C&oacute;digo:</label>
+										<input readonly="true" type="text" class="field" name="codigo" id="codigo_tipo_permiso" value="<?=$datos_tipo_de_permiso['code']?>" />
+									</p>
+									<p>
+										<label for="valor" class="left">Valor:</label>
+										<input type="text" class="field" name="valor" id="valor_tipo_permiso" value="<?=$datos_tipo_de_permiso['value']?>" />
+									</p>
+									<p>
+										<input type="button" class="button" value="Actualizar" id="boton_actualizar_permiso" />
+									</p>
+									<input type="hidden" id="tipo_de_permiso" value="<?=$_GET['tipo'];?>" />
+								</fieldset>
+							</form>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#boton_actualizar_permiso').bind('click',function(e){
+									updateTypePermission('<?=$datos_tipo_de_permiso['id']?>','<?=$_GET['tipo'];?>');
+								});
+							});
+						</script>
+						<?php
+						}
+						?>
+					</div> 
+					<div class="corner-content-1col-bottom"></div>
+    				</div>
+    				<!-- C.2 SUBCONTENT-->
+				<div class="subcontent">
+					<!-- NAVIGATION SIDEBAR -->
+					<?php require('../system/navigation_sidebar.inc.php'); ?>   
+				</div>
+    				<!-- END OF CONTENT -->
+    			</div>
+			<!-- D. FOOTER -->      
+			<?php require('../footer.inc.php');?>       
+		</div>
+		<!-- D. FOOT PANEL --> 
+		<?php require('../system/footpanel.inc.php');?>
+	</body>
+</html>
+
+
+

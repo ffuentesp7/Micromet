@@ -1,0 +1,10 @@
+<?php
+
+/**
+ * @file
+ * A single location to store configuration.
+ */
+
+define('CONSUMER_KEY', 'BPJDdIeNff4jx0dtgQmvsA');
+define('CONSUMER_SECRET', 'rXsWI0ZWRSSRN8GG6lW8Fxmodgh3bvJwhtlSP35k');
+define('OAUTH_CALLBACK', 'http://example.com/twitteroauth/callback.php');

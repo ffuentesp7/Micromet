@@ -1,0 +1,7 @@
+MOD FORECAST:
+    [MOD_FORECAST_ADMIN] {1|0}
+    
+    
+MOD_REMOTE_SENSING
+    [MOD_METRIC_ACCESS] {1|0}
+    

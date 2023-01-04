@@ -1,0 +1,34 @@
+function getStationSelectTypeStation(){
+	var sid = $('#sid').val();
+	var mid = $('#mid').val();
+	
+	var url = 'modelo.acciones.php?sid='+sid+'&accion=getstationsselect&mid='+mid+'&target=STATION';
+	
+	$.get(url,'',function(data){
+		if(data != 0){
+			swapText('select_estacion_field',data);
+		}
+		else{
+			error("Error al cargar las estaciones: "+data );
+		}
+	});
+}
+
+function getData(){
+	swapText('cuerpo_datos','<img class="centernoborder" src="../img/loaders/loader-01.gif" />');
+
+	var sid 	= $('#sid').val();
+	var eid 	= $('#select_estacion option:selected').val();
+	var tiid 	= $('#tiid').val();
+	
+	var url = 'instrumento.acciones.php?sid='+sid+'&accion=getdata&tiid='+tiid+'&eid='+eid;
+	
+	$.get(url,'',function(data){
+		if(data != 0){
+			swapText('cuerpo_datos',data);
+		}
+		else{
+			error("Error al cargar los datos: "+data );
+		}
+	});
+}

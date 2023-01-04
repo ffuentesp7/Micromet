@@ -1,0 +1,49 @@
+<?php
+	require('../aut_verifica.inc.php');
+	require('../funciones.inc.php');
+
+	$SQL = "SELECT estacion.nombre,estacion.id,estacion.ultima_fecha,estacion.ultima_hora
+	FROM eve_usuario_has_tipo_de_permiso_usuario, eve_tipo_de_permiso_usuario, estacion
+	WHERE usuario_id=".$_SESSION['session_usuario_id']."
+	AND eve_tipo_de_permiso_usuario_id=eve_tipo_de_permiso_usuario.id
+	AND eve_tipo_de_permiso_usuario.value=estacion.id 
+	ORDER BY estacion.nombre";
+	
+	$result_estaciones = consulta_sql($SQL);
+	
+	$HTML = '';
+	
+	while($datos_estaciones = mysqli_fetch_array($result_estaciones)){
+		$HTML.= '<li>';
+		$HTML.= '<a href="javascript:toggleMenu(\'sidebar_station_link_'.$datos_estaciones[1].'\');">';
+		$HTML.= '<img class="leftnoborder" src="../img/footpanel/one-station.png"/>';
+		$HTML.= $datos_estaciones[0];
+		$HTML.= '</a>';
+		$HTML.= '<ul style="display:none;" class="sidebar_station_link" id="sidebar_station_link_'.$datos_estaciones[1].'">';
+		
+		$HTML.= '<li><a href="../system/estacion_ver.php?sid='.$_SESSION["session_nombre_sesion"].'&name='.$datos_estaciones[0].'&eid='.$datos_estaciones[1].'">';
+		$HTML.= "<img class='leftnoborder' src='../img/footpanel/one-station.png'/>";
+		$HTML.= 'Ver Estaci&oacute;n</a></li>';
+			
+		$SQL2 = "SELECT instrumento.id,tipo_instrumento.nombre,tipo_instrumento.code,modelo
+			FROM instrumento,tipo_instrumento,estacion
+			WHERE instrumento.estacion_id=estacion.id
+			AND instrumento.tipo_instrumento_id=tipo_instrumento.id
+			AND estacion.id=".$datos_estaciones[1]."
+			ORDER BY tipo_instrumento.nombre";
+		
+		$result_instrumentos = consulta_sql($SQL2);
+		while($datos_instrumentos = mysqli_fetch_array($result_instrumentos)){
+			$HTML.= '<li><a href="../system/instrumento_ver.php?sid='.$_SESSION["session_nombre_sesion"].'&tipo='.$datos_instrumentos[2].'&eid='.$datos_estaciones[1].'&iid='.$datos_instrumentos[0].'&name='.$datos_instrumentos[3].'">';
+			$HTML.= "<img class='leftnoborder' src='../img/sensorsicons/".$datos_instrumentos[2].".png'/>";
+			$HTML.= $datos_instrumentos[1].'</a></li>';
+		}
+		$HTML.= '</ul>';
+		$HTML.= '</li>';
+	}
+	
+	if($HTML == '')
+		$HTML = '<li><a>No Existen Estaciones</a></li>';
+	echo $HTML;
+	
+?>

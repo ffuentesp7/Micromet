@@ -1,0 +1,19 @@
+<?php
+function twitter_update($msg){
+	$consumerKey = 'BPJDdIeNff4jx0dtgQmvsA'; //inserta tu consumer key
+	$consumerSecret = 'rXsWI0ZWRSSRN8GG6lW8Fxmodgh3bvJwhtlSP35k'; //inserta tu consumer secret
+	$oAuthToken = '185747889-I1WKay7XIdySc0HcaYsC1udO0CRQ4xJtQdvh0e4U'; //inserta tu access token
+	$oAuthSecret = 'ebt3pZTQIZ3t5la0TjRrGfhBhZqa2SzoaqAlXck9E'; //inserta tu token secret
+	//busca el archivo de conexión de twitter
+	require_once('twitteroauth/twitteroauth.php');
+
+	//Crea una nueva instancia
+	$tweet = new TwitterOAuth($consumerKey, $consumerSecret, $oAuthToken, $oAuthSecret);
+
+	//Envía el tweet
+	$tweet->post('statuses/update', array('status' => $msg));
+}
+
+echo twitter_update('AUTO TEST');
+
+?>

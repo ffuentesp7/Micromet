@@ -1,0 +1,89 @@
+$(document).ready(function(){
+	$('#fecha_insert').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true
+	});
+	$('#fecha_insert').datepicker($.datepicker.regional['es']);
+	
+	$('#fecha1').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true
+	});
+	$('#fecha1').datepicker($.datepicker.regional['es']);
+	
+	$('#fecha1').bind('change',function(ev){
+		get_log();
+	});
+	
+	$('#fecha2').bind('change',function(ev){
+		get_log();
+	});
+	
+	$('#fecha2').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true
+	});
+	$('#fecha2').datepicker($.datepicker.regional['es']);
+	$('#evento').wysiwyg();
+	$('#link_imprimir').bind('click',function(ev){
+		print_log();
+	});
+});
+
+function get_log(){
+	
+	$('#contenido_bitacora').html('<img class="centernoborder" src="../img/loaders/loader-01.gif" />');
+	var fecha1 = $('#fecha1').val();
+	var fecha2 = $('#fecha2').val();
+	var sid = $('#sid').val();
+	
+	var url = 'bitacora_escrita.acciones.php?sid='+sid+'&accion=getlog&fecha1='+fecha1+'&fecha2='+fecha2;
+	
+	$.get(url,'',function(data){
+		$('#contenido_bitacora').html(data);
+	});
+}
+
+function add_log(){
+	var evento = $('#evento').val();
+	var fecha = $('#fecha_insert').val();
+	var sid = $('#sid').val();
+	
+	if(evento == ''){
+		alert('El evento no puede estar vacio');
+		return;
+	}
+	
+	if(fecha == ''){
+		alert('Debe ingresar una fecha para el evento');
+		return;
+	}
+	
+	var url = 'bitacora_escrita.acciones.php?sid='+sid+'&accion=add&fecha='+fecha+'&evento='+evento;
+	$('#evento').wysiwyg('clear');
+	$.get(url,'',function(data){
+		if(data == '1'){
+			success('El evento fue ingresado con &eacute;xito.');
+			get_log();
+		}
+		else{
+			error('Error al ingresar el evento');
+		}
+	});	
+}
+
+function print_log(){
+	var fecha1 = $('#fecha1').val();
+	var fecha2 = $('#fecha2').val();
+	var sid = $('#sid').val();
+	
+	var url = 'bitacora_escrita.acciones.php?sid='+sid+'&accion=getlog_for_print&fecha1='+fecha1+'&fecha2='+fecha2;
+	
+	window.open(url);
+}

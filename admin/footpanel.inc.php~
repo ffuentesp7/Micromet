@@ -1,0 +1,12 @@
+<div id="footpanel">
+	<ul id="mainpanel">
+		<li><a href="../system/index.php?sid=<?=$_SESSION['session_nombre_sesion']?>" class="home">Principal <small>Sistema</small></a></li>
+		<li><a href="../system/index.php?sid=<?=$_SESSION['session_nombre_sesion']?>" class="editprofile">Editar Datos <small>Perfil</small></a></li>
+		<li><a href="../system/index.php?sid=<?=$_SESSION['session_nombre_sesion']?>" class="messages">Mensajes <small>Mensajes</small></a></li>
+		<li><a href="../admin/index.php?sid=<?=$_SESSION['session_nombre_sesion']?>" class="adminpanel">Admin <small>Admin</small></a></li>
+		<li class="division"><p>&nbsp;</p></li>
+		<li style="float: right;"><a class="texto">Todas las Estaciones Activas</a></li>
+		<li style="float: right;"><a class="texto">Todas las Estaciones Activas</a></li>
+		<li id="alertpanel"><a href="../index.php?sid=<?=$_SESSION['session_nombre_sesion']?>" class="salir">Salir <small>Salir</small></a></li>
+	</ul>
+</div> 

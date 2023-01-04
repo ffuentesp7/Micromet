@@ -1,0 +1,105 @@
+<a id="anchor-sidemenu-4"></a>
+
+<span id="span_estaciones_menu_lateral">
+	<div class="corner-subcontent-top"></div>                        
+	<div class="subcontent-box">
+		<h1 class="station">Estaciones</h1>
+		<div class="sidemenu1">
+			<ul id="navigation_sidebar_ajax_loader">
+				<li>
+					<p>
+						<img class="centernoborder" src="../img/loaders/loader-01.gif" />
+					</p>
+					
+				</li>
+					
+			</ul>
+		</div>
+	</div>
+	<div class="corner-subcontent-bottom"></div>
+</span>
+
+
+<span id="span_instrumento_menu_lateral" style="display: none;">
+	<div class="corner-subcontent-top"></div>                        
+	<div class="subcontent-box">
+		<h1 class="sensor">Instrumento</h1>
+		
+		<div class="sidemenu1">
+			<span id="instrumento_lateral"></span>
+		</div>
+	</div>
+	<div class="corner-subcontent-bottom"></div>
+</span>
+
+<script type="text/javascript">
+	function toggleMenu(id){
+		var display = $('#'+id).css('display');
+		if(display == 'none'){
+			$('.sidebar_station_link').slideUp();
+			$('#'+id).slideDown();
+		}
+		else{
+			$('#'+id).slideUp();
+		}
+	}
+	
+	function activateInstrument(){
+		$('#span_estaciones_menu_lateral').fadeOut("fast");
+		$('#span_instrumento_menu_lateral').fadeIn();
+		$('#span_instrumento_menu_lateral').makeFloat({x:"current",y:70,speed:"fast"});
+		$('#link_desactivar_instrumento').show("fast");
+		$('#link_activar_instrumento').hide("fast");
+	}
+	
+	function desactivateInstrument(){
+		$('#span_instrumento_menu_lateral').fadeOut("fast");
+		$('#span_estaciones_menu_lateral').fadeIn();
+		$('#link_desactivar_instrumento').hide("fast");
+		$('#link_activar_instrumento').show("fast");
+		
+	}
+	
+	$(document).ready(function(){
+		var sid = $('#sid').val();
+		
+		var url = '../system/navigation_sidebar_ajax.inc.php?sid='+sid;
+		
+		$.get(url,'',function(data){
+			$('#navigation_sidebar_ajax_loader').html(data);
+			<?php
+			if(isset($_GET['eid'])){
+				echo "toggleMenu('".$_GET['eid']."');";
+			}
+			?>
+		});
+		
+		<?php
+			if(isset($_GET['tipo']) && isset($_GET['tiid'])){
+		?>
+		$('#link_activar_instrumento').click(function(e){
+			activateInstrument();
+		});
+		
+		$('#link_desactivar_instrumento').click(function(e){
+			desactivateInstrument();
+		});
+		
+		
+		<?php	
+				if($_GET['tipo'] == "WINDSPEED" || $_GET['tipo'] == "WINDDIR"){
+					?>
+					$('#instrumento_lateral').jQueryInstrument({instrumentType:"<?=$_GET['tipo']?>",imgWidth: "250px"});
+					<?php	
+				}
+				else{
+					?>
+					$('#instrumento_lateral').jQueryInstrument({instrumentType:"<?=$_GET['tipo']?>"});
+					<?php
+				}
+		
+			}
+		?>
+	});
+
+</script>

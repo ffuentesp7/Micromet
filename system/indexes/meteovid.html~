@@ -1,0 +1,12 @@
+ <!-- CONTENT CELL -->                
+<a id="anchor-heading-1"></a>
+<div class="corner-content-1col-top"></div>                        
+<div class="content-1col-nobox">
+	<h1 class="webtemplate" id="top_title">METEOVID, la red meteorol&oacute;gica de las vi&ntilde;as de Chile.</h1>
+	<p>
+		<img src="indexes/img/logo_meteovid.jpg" class="centernoborder"/>
+	</p>
+	<h2>&Uacute;ltimas Informaciones:</h2>
+	<p></p>
+</div> 
+<div class="corner-content-1col-bottom"></div>

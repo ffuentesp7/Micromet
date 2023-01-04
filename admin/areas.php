@@ -1,0 +1,198 @@
+<?php
+	require('../aut_verifica.inc.php');
+	require('../funciones.inc.php');
+	check_admin($_SESSION['session_nombre_sesion']);
+	estadisticas('WEB','PAGE_VIEW');
+	estadisticas('ADMIN_USE','AREAS');
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!--  Version: Multiflex-5.4 / Overview                     -->
+<!--  Date:    Nov 23, 2010                                 -->
+<!--  Design:  www.1234.info                                -->
+<!--  Modified:  roaguilar@utalca.cl                        -->
+<!--  License: Fully open source without restrictions.      -->
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=iso 8859-2" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="3600" />
+		<meta name="revisit-after" content="2 days" />
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="copyright" content="Micromet - Biovisión" />
+		
+		<meta name="distribution" content="global" />
+		<meta name="description" content="Micromet" />
+		<meta name="keywords" content="vizualizaci�n, agua, agricultura, agroclimatolog�a, climatolog�a" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_reset.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_grid.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_content.css" />
+		<link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+		<?php require_once('../head.link.script.php'); ?>
+		<script src="js/areas.js" type="text/javascript"></script>
+		<title>Micromet - Biovision</title>
+	</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+	<body>
+		<!-- CONTAINER FOR ENTIRE PAGE -->
+		<div class="container">
+
+    			 <!-- B. NAVIGATION BAR -->
+			 <?php require('../system/navigation_bar.inc.php'); ?>   
+  
+			<!-- C. MAIN SECTION -->      
+			<div class="main">
+
+				<!-- C.1 CONTENT -->
+				<div class="content">
+					 <!-- CONTENT CELL -->                
+					<a id="anchor-heading-1"></a>
+					<div class="corner-content-1col-top"></div>                        
+					<div class="content-1col-nobox">
+						<?php
+						
+						$PAGE = "main";
+						if(isset($_GET['page']))
+							$PAGE = $_GET['page'];
+						
+						if( $PAGE == "main"){
+						?>
+						<h1 class="webtemplate" id="top_title">&Aacute;reas</h1>
+						<table style="width: auto; background-color: #fff;">
+							<tr>
+								<td class="whitenoborder"><a href="../admin/areas.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=add" onmouseover="javascript: swapText('top_title','Nueva &Aacute;rea');" onmouseout="javascript: swapText('top_title','&Aacute;reas de Estaciones');"><img class="blueborder" src="../img/actionicons/area_new.png" /></a></td>
+								<td class="whitenoborder"><a href="../admin/areas.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=openall" onmouseover="javascript: swapText('top_title','Ver &Aacute;reas');" onmouseout="javascript: swapText('top_title','&Aacute;reas de Estaciones');"><img class="blueborder" src="../img/actionicons/area_open.png" /></a></td>
+							</tr>
+						</table>
+						<?php
+						}
+						elseif( $PAGE == "add"){
+						?>
+						<h1 class="webtemplate" id="top_title">Nueva &Aacute;rea</h1>
+						<p><a href="../admin/areas.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Datos de la Nueva &Aacute;rea&nbsp;</legend>
+									<p>
+										<label for="nombre_area" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre_area" id="nombre_area" />
+									</p>
+									<p>
+										<label for="descripcion_area" class="left">Descripci&oacute;n</label>
+										<input type="text" class="field" name="descripcion_area" id="descripcion_area" />
+									</p>
+									<p>
+										<input type="button" class="button" style="width: auto;" value="    Ingresar Nueva Area    " onclick="addArea()" />
+									</p>									
+								</fieldset>
+							</form>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "openall"){
+						?>
+						<h1 class="webtemplate" id="top_title">Ver &Aacute;reas</h1>
+						<p><a href="../admin/areas.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="contenido">
+							<img src="../img/loaders/loader-01.gif" class="centernoborder" />
+						</span>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								openAllAreas();
+							});
+						</script>
+						<?php
+						}
+						elseif( $PAGE == "openone"){
+							
+							$AID = $_GET['aid'];
+							
+							$SQL = "SELECT nombre,descripcion FROM eve_area WHERE id=$AID";
+							
+							$result_area = consulta_sql($SQL);
+							
+							$datos_area = mysqli_fetch_array($result_area);
+							
+							$NOMBRE		= $datos_area[0];
+							$DESCRIPCION	= $datos_area[1];
+						
+						?>
+						<h1 class="webtemplate" id="top_title">&Aacute;reas</h1>
+						<p><a href="../admin/areas.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Datos del &Aacute;rea&nbsp;</legend>
+									<p>
+										<label for="nombre_area" class="left">Nombre:</label>
+										<input type="text" class="field" name="nombre_area" id="nombre_area" value="<?=$NOMBRE?>" />
+									</p>
+									<p>
+										<label for="descripcion_area" class="left">Descripci&oacute;n</label>
+										<input type="text" class="field" name="descripcion_area" id="descripcion_area" value="<?=$DESCRIPCION?>" />
+									</p>
+									<p>
+										<input type="button" class="button" style="width: auto;" value="    Actualizar Area    " onclick="updateArea()" />
+									</p>
+									<input type="hidden" name="aid" id="aid" value="<?=$AID?>" />								
+								</fieldset>
+							</form>
+						</div>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;Asociar Estaci&oacute;n&nbsp;</legend>
+									<p>
+										<label for="select_estaciones" class="left">Estaci&oacute;n:</label>
+										<span id="span_estacion">
+											<img src="../img/loaders/loader-01.gif" class="centernoborder" />
+										</span>
+									</p>
+									<p>
+										<input type="button" class="button" style="width: auto;" value="    Asociar Estaci&oacute;n    " onclick="linkStation()" />
+									</p>									
+								</fieldset>
+							</form>
+						</div>
+						<h2>Estaciones Asociadas</h2>
+						<span id="contenido">
+							<img src="../img/loaders/loader-01.gif" class="centernoborder" />
+						</span>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								getSelectStation();
+								getAssociatedStation();
+							});
+						</script>
+						<?php
+						}
+						?>
+					</div> 
+					<div class="corner-content-1col-bottom"></div>
+    				</div>
+    				<!-- C.2 SUBCONTENT-->
+				<div class="subcontent">
+					<!-- NAVIGATION SIDEBAR -->
+					<?php require('../system/navigation_sidebar.inc.php'); ?>   
+				</div>
+    				<!-- END OF CONTENT -->
+    			</div>
+			<!-- D. FOOTER -->      
+			<?php require('../footer.inc.php');?>       
+		</div>
+		<!-- D. FOOT PANEL --> 
+		<?php require('../system/footpanel.inc.php');?>
+	</body>
+</html>
+
+
+

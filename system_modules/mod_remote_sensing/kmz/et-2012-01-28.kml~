@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<GroundOverlay>
+	<name>ET-2012-01-28</name>
+	<color>ccffffff</color>
+	<Icon>
+		<href>http://db/e-VE/system_modules/mod_remote_sensing/kml/et-2012-01-28.png</href>
+		<viewBoundScale>0.75</viewBoundScale>
+	</Icon>
+	<LatLonBox>
+		<north>-35.18714392465758</north>
+		<south>-35.91711054184557</south>
+		<east>-70.9283903102792</east>
+		<west>-72.2001030895408</west>
+		<rotation>-1.544768409934446</rotation>
+	</LatLonBox>
+</GroundOverlay>
+</kml>

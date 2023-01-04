@@ -1,0 +1,53 @@
+function getStationSelectTypeStation(){
+	var sid = $('#sid').val();
+	var mid = $('#mid').val();
+	var tar = $('#target').val();
+	
+	var url = 'modelo.acciones.php?sid='+sid+'&accion=getstationsselect&target='+tar+'&mid='+mid;
+	
+	$.get(url,'',function(data){
+		if(data != 0){
+			swapText('select_estacion_field',data);
+		}
+		else{
+			error("Error al cargar las estaciones: "+data );
+		}
+	});
+}
+
+function getData(){
+	swapText('cuerpo_datos','<img class="centernoborder" src="../img/loaders/loader-01.gif" />');
+
+	var sid 	= $('#sid').val();
+	var eid 	= $('#select_estacion option:selected').val();
+	var mid 	= $('#mid').val();
+	var tar		= $('#target').val();
+	
+	var url = 'modelo.acciones.php?sid='+sid+'&accion=getdata&target='+tar+'&mid='+mid+'&eid='+eid;
+	
+	$.get(url,'',function(data){
+		if(data != 0){
+			swapText('cuerpo_datos',data);
+		}
+		else{
+			error("Error al cargar los datos: "+data );
+		}
+	});
+}
+
+function getDataAuto(eid,mid,tar){
+	swapText('cuerpo_datos','<img class="centernoborder" src="../img/loaders/loader-01.gif" />');
+
+	var sid 	= $('#sid').val();
+	
+	var url = 'modelo.acciones.php?sid='+sid+'&accion=getdata&target='+tar+'&mid='+mid+'&eid='+eid;
+	
+	$.get(url,'',function(data){
+		if(data != 0){
+			swapText('cuerpo_datos',data);
+		}
+		else{
+			error("Error al cargar los datos: "+data );
+		}
+	});
+}

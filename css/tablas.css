@@ -1,0 +1,139 @@
+table.mediagrove {
+	width: 640px;
+	border-collapse:collapse;
+	border:1px solid #FFCA5E;
+	background: #fff;
+	cursor: pointer;
+}
+	table.mediagrove caption {
+		font: 1.8em/1.8em Arial, Helvetica, sans-serif;
+		text-align: left;
+		text-indent: 10px;
+		background: url(../img/tables/mediagrove_bg_caption.jpg) right top;
+		height: 45px;
+		color: #FFAA00;
+	}
+	table.mediagrove thead th {
+		background: url(../img/tables/mediagrove_bg_th.jpg) no-repeat right;
+		height: 47px;
+		color: #FFFFFF;
+		font-size: 0.8em;
+		font-weight: bold;
+		padding: 0px 7px;
+		margin: 20px 0px 0px;
+		text-align: left;
+		border:1px solid #FFCA5E;
+		border-right: 1px solid #FCF1D4;
+	}
+	table.mediagrove tbody tr td, table.mediagrove tbody tr th{
+		background: url(../img/tables/mediagrove_bg_td1.jpg) repeat-x top;
+		color: rgb(75,75,75);
+	}
+	table.mediagrove tbody tr.odd td, table.mediagrove tbody tr.odd th{
+		background: #FFF8E8 url(../img/tables/mediagrove_bg_td2.jpg) repeat-x;
+		color: rgb(75,75,75);
+	}
+	table.mediagrove tbody tr.odd3 td, table.mediagrove tbody tr.odd3 th{
+		background: #FFF8E8 url(../img/tables/mediagrove_bg_td3.jpg) repeat-x;
+		color: rgb(225,225,225);
+	}
+	
+	table.mediagrove tbody th,table.mediagrove tbody td {
+		font-size: 0.8em;
+		line-height: 1.4em;
+		font-family: Arial, Helvetica, sans-serif;
+		color: #777777;
+		padding: 10px 7px;
+		border:1px solid #FFCA5E;
+		border-top: 1px solid #FFCA5E;
+		border-right: 1px solid #DDDDDD;
+		text-align: left;
+	}
+	table.mediagrove a {
+		color: #777777;
+		font-weight: bold;
+		text-decoration: underline;
+	}
+	table.mediagrove a:hover {
+		color: #F8A704;
+		text-decoration: underline;
+	}
+	table.mediagrove tfoot th {
+		background: url(../img/tables/mediagrove_bg_total.jpg) repeat-x bottom;
+		color: #FFFFFF;
+		height: 30px;
+		border:1px solid #FFCA5E;
+	}
+	table.mediagrove tfoot td {
+		background: url(../img/tables/mediagrove_bg_total.jpg) repeat-x bottom;
+		color: #FFFFFF;
+		height: 30px;
+		border:1px solid #FFCA5E;
+	}
+
+table.blix {
+ font-size:12px;
+ font-family: Arial, Helvetica, verdana sans-serif;
+ background-color:#fff;
+ border-collapse: collapse;
+ width: 300px;
+}
+table.blix caption {
+ font-size: 25px;
+ color: #1ba6b2;
+ font-weight: bold;
+ text-align: left;
+ background: url(header_bg.jpg) no-repeat top left;
+ padding: 10px;
+ margin-bottom: 2px;
+}
+table.blix thead th {
+ border-right: 1px solid #fff;
+ color:#fff;
+ text-align:center;
+ padding:2px;
+ text-transform:uppercase;
+ height:15px;
+ background-color: #a3c159;
+ font-weight: normal;
+}
+table.blix tfoot {
+ color:#1ba6b2;
+ padding:2px;
+ text-transform:uppercase;
+ font-size:1.2em; 
+ font-weigth: bold;
+ margin-top:6px;
+ border-top: 6px solid #e9f7f6;
+}
+table.blix tbody tr {
+ background-color:#fff;
+ border-bottom: 1px solid #f0f0f0;
+}
+table.blix tbody td {
+ color:#414141;
+ padding:5px;
+ text-align:left;
+}
+table.blix tbody th {
+ text-align:left;
+ padding:2px;
+}
+table.blix tbody td a, tbody th a {
+ color:#6C8C37;
+ text-decoration:none;
+ font-weight:normal; 
+ display:block;
+ background: transparent url(links_yellow.gif) no-repeat 0% 50%;
+ padding-left:15px;
+}
+table.blix tbody td a:hover, tbody th a:hover {
+ color:#009193;
+ text-decoration:none;
+}
+
+div.info_div{
+
+width:350px;
+height:600px;
+}

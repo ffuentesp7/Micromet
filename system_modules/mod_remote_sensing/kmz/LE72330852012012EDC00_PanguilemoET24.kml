@@ -1,0 +1,3 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">
+<GroundOverlay><name>LE72330852012012EDC00_PanguilemoET24</name><description><![CDATA[Evapotranspiración Real (mm/día)<img src="http://files.raguilar.cl/bar.png"/>]]></description><color>b0ffffff</color><Icon><href>http://www.citrautalca.cl/eve/system_modules/mod_remote_sensing/kmz/LE72330852012012EDC00_PanguilemoET24.jpg</href><viewBoundScale>0.75</viewBoundScale></Icon><gx:LatLonQuad><coordinates>-71.938830,-35.632629,0 -71.276880,-35.646971,0 -71.261739,-35.106461,0 -71.919301,-35.092402,0</coordinates></gx:LatLonQuad></GroundOverlay></kml>

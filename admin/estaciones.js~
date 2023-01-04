@@ -1,0 +1,51 @@
+function setLabelsFromStationForGetStatus(nombre,eid){
+	var sid = $('#sid').val();
+	
+	$('#nombre_estacion').val(nombre);
+	$('#eid').val(eid);
+
+	$('#fbloader_image').show();
+	tb_remove();
+	
+	url = 'estaciones.acciones.php?sid='+sid+'&accion=getdatasource&eid='+eid;
+	
+	$.get(url,'',function(data){
+		$('#fuente_de_datos').val(data);
+	});
+	
+	var info = $('#informacion_estacion option:selected').val();
+	
+	url = 'estaciones.acciones.php?sid='+sid+'&accion='+info+'&eid='+eid;
+	
+	$.get(url,'',function(data){
+		$('#estacion_contenido').html(data);
+	});
+	
+	
+	$('#fbloader_image').hide();
+}
+
+function changeTypeInfo(){
+	var eid = $('#eid').val();
+	var sid = $('#sid').val();
+	$('#fbloader_image').show();
+	var info = $('#informacion_estacion option:selected').val();
+	
+	url = 'estaciones.acciones.php?sid='+sid+'&accion='+info+'&eid='+eid;
+	
+	$.get(url,'',function(data){
+		$('#estacion_contenido').html(data);
+	});
+	
+	$('#fbloader_image').hide();
+}
+
+function getStationsDownloadInfo(){
+	var sid = $('#sid').val();
+	
+	url = 'estaciones.acciones.php?sid='+sid+'&accion=downloadinfo';
+	
+	$.get(url,'',function(data){
+		$('#contenido').html(data);
+	});
+}

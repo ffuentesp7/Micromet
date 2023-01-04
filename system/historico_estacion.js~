@@ -1,0 +1,51 @@
+$(document).ready(function(e){
+	get_select_station();
+	$('#fecha_desde').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true,
+		maxDate: new Date()
+		
+	});
+	$('#fecha_hasta').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true,
+		maxDate: new Date()
+	});
+});
+
+function get_select_station(){
+	var sid = $('#sid').val();
+	
+	var url = 'historico.acciones.php?sid='+sid+'&accion=get_select_stations';
+	
+	$.get(url,'',function(data){
+		$('#select_estacion_field').html(data);
+	});
+}
+
+function get_data(){
+	var sid = $('#sid').val();
+	var station = $('#select_estacion option:selected').val();
+	var stationName = $('#select_estacion option:selected').html();
+	var fd = $('#fecha_desde').val();
+	var fh = $('#fecha_hasta').val();
+	var detalle = $('#select_detalle option:selected').val();
+	
+	if(station == 0){
+		alert('Debe seleccionar una estacion');
+		return;
+	}
+	
+	if(Date.parse(fd) > Date.parse(fh)){
+		alert('Fecha Desde debe ser anterior a Fecha Hasta');
+		return;
+	}
+	
+	var url = 'historico.show.php?url=historico.acciones.php?title='+stationName+'&sid='+sid+'@accion=get_data_station@sta='+station+'@fd='+fd+'@fh='+fh+'@det='+detalle;
+	
+	window.open(url);
+}

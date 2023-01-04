@@ -1,0 +1,16 @@
+<?php
+	$INSTYPE = array();
+	
+	$INSTYPE[1] = array('Radiaci&oacute;n Global','GR');
+	$INSTYPE[2] = array('Velocidad de Viento','WINDSPEED');
+	$INSTYPE[3] = array('Direcci&oacute;n de Viento','WINDDIR');
+	$INSTYPE[4] = array('Humedad Relativa','RH');
+	$INSTYPE[5] = array('Temperatura','TEMP');
+	$INSTYPE[6] = array('Precipitacion','RAIN');
+	$INSTYPE[7] = array('Bateria','BATT');
+	$INSTYPE[8] = array('Humedad de Hoja','LW');
+	$INSTYPE[9] = array('Panel Solar','SOLARCELL');
+	$INSTYPE[10] = array('Presion del Aire','AIRPRESS');
+	$INSTYPE[11] = array('Temperatura del Suelo','SOILTEMP');
+	$INSTYPE[12] = array('Temperatura Interna (Acompa&ntilde;a LW)','TEMP');
+?>

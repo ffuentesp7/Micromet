@@ -1,0 +1,171 @@
+<span id="pageup"></span>
+<div class="corner-page-top"></div>        
+<div class="navbar">
+	
+	<!-- Navigation item -->
+	<ul>
+		<li><a href="#">Sensores (Estaciones)<!--[if IE 7]><!--></a><!--<![endif]-->
+		<!--[if lte IE 6]><table><tr><td><![endif]-->
+		<ul>
+			<?php
+				$SQL = "SELECT DISTINCT tipo_instrumento.nombre,tipo_instrumento.code,tipo_instrumento.id
+					FROM instrumento,tipo_instrumento
+					WHERE tipo_instrumento_id=tipo_instrumento.id";
+			
+				$result_tipo_instrumento = consulta_sql($SQL);
+				$HTML = "";
+				
+				
+				while($datos_tipo_instrumento = mysqli_fetch_array($result_tipo_instrumento)){
+					$HTML .= "<li><a href='../system/instrumento.php?sid=".$_SESSION['session_nombre_sesion']."&tipo=".$datos_tipo_instrumento[1]."&tiid=".$datos_tipo_instrumento[2]."&page=ti'>";
+					$HTML.= "<img class='leftnoborder' src='../img/sensorsicons/".$datos_tipo_instrumento[1].".png'/>";
+					$HTML.= $datos_tipo_instrumento[0]."</a></li>";
+				}
+				if($HTML == '')
+					$HTML = "<li><a>No Existen Sensores</a></li>";
+				
+				echo $HTML;
+			?>
+		</ul>
+		<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+	<!-- Navigation item -->
+	<ul>
+		<li><a href="#">Sensores (Otros)<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]><table><tr><td><![endif]-->
+			<ul>
+				<?php
+				if(get_user_permission($_SESSION['session_usuario_id'],'LOADING_DATA_ACCESS') == '1'){
+				?>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Cargar Datos</a></li>
+				<?
+				}
+				?>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 2</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 3</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 4</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 5</a></li>
+			</ul>
+			<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+	<!-- Navigation item -->
+	<ul>
+		<li><a href="#">Modelos<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]><table><tr><td><![endif]-->
+			<ul>
+				<?php
+				$SQL = "SELECT DISTINCT tipo_modelo.nombre,tipo_modelo.id,tipo_modelo.descripcion
+					FROM tipo_modelo,estacion,estacion_has_modelo
+					WHERE estacion.id=estacion_has_modelo.id_estacion
+					AND estacion_has_modelo.id_tipo_modelo=tipo_modelo.id";
+				
+				$result_modelos = consulta_sql($SQL);
+				
+				$HTML = '';
+				
+				while($datos_modelos = mysqli_fetch_array($result_modelos)){
+					$HTML.= '<li>';
+					$HTML.= '<a href="../system/modelo.php?sid='.$_SESSION['session_nombre_sesion'].'&page=tmd&tmd=STATION&mid='.$datos_modelos[1].'&mnm='.$datos_modelos[0].'" title="'.$datos_modelos[2].'">';
+					$HTML.= '<img class="leftnoborder" src="../img/footpanel/function.png"/>';
+					$HTML.= $datos_modelos[0];
+					$HTML.= '</a>';
+					$HTML.= '</li>';
+				}
+				
+				$SQL = "SELECT DISTINCT tipo_modelo.nombre,tipo_modelo.id,tipo_modelo.descripcion
+					FROM tipo_modelo,instrumento,instrumento_has_modelo
+					WHERE instrumento.id=instrumento_has_modelo.instrumento_id
+					AND instrumento_has_modelo.tipo_modelo_id=tipo_modelo.id";
+				
+				$result_modelos = consulta_sql($SQL);
+				
+				while($datos_modelos = mysqli_fetch_array($result_modelos)){
+					$HTML.= '<li>';
+					$HTML.= '<a href="../system/modelo.php?sid='.$_SESSION['session_nombre_sesion'].'&page=tmd&tmd=SENSOR&mid='.$datos_modelos[1].'&mnm='.$datos_modelos[0].'" title="'.$datos_modelos[2].'" title="'.$datos_modelos[2].'">';
+					$HTML.= '<img class="leftnoborder" src="../img/footpanel/function.png"/>';
+					$HTML.= $datos_modelos[0];
+					$HTML.= '</a>';
+					$HTML.= '</li>';
+				}
+				
+				if($HTML == '')
+					$HTML = '<li><a>No Existen Modelos</a></li>';
+				echo $HTML;
+				
+			?>
+			</ul>
+			<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>                  
+	<!-- Navigation item -->
+	<?php
+	if(get_user_permission($_SESSION['session_usuario_id'],'HISTORICAL_DATA_ACCESS') == '1'){
+	?>
+	<ul>
+		<li><a href="#">Hist&oacute;rico<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]><table><tr><td><![endif]-->
+			<ul>
+				<li><a href="../system/historico_estacion.php?sid=<?=$_SESSION['session_nombre_sesion']?>"><img class="leftnoborder" src="../img/footpanel/one-station.png"/>Estaci&oacute;n</a></li>
+				<li><a href="../system/historico_instrumento.php?sid=<?=$_SESSION['session_nombre_sesion']?>"><img class="leftnoborder" src="../img/footpanel/port.png"/>Sensor&#047;Instrumento</a></li>
+				<li><a href="../system/historico_modelo.php?sid=<?=$_SESSION['session_nombre_sesion']?>"><img class="leftnoborder" src="../img/footpanel/function.png"/>Modelo</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/chart-pie.png"/>Comparativos</a></li>
+				<li><a href="../system/descarga_estacion.php?sid=<?=$_SESSION['session_nombre_sesion']?>"><img class="leftnoborder" src="../img/footpanel/page-excel.png"/>Descarga</a></li>
+			</ul>
+			<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+	<?php
+	}	
+	?>
+	<!-- Navigation item -->
+	<?php
+	if(get_user_permission($_SESSION['session_usuario_id'],'NEWSLETTERS_ACCESS') == '1'){
+	?>
+	
+	<ul>
+		<li><a href="#">Boletines<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]><table><tr><td><![endif]-->
+			<ul>
+				<li><a href="../system/boletines_area.php?sid=<?=$_SESSION['session_nombre_sesion']?>"><img class="leftnoborder" src="../img/footpanel/page-white-pdf.png"/>Meteovid (por &aacute;rea)</a></li>
+			</ul>
+			<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+	<?php
+	}	
+	?>
+	<!-- Navigation item -->
+	<ul>
+		<li><a href="#">M&oacute;dulos<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]><table><tr><td><![endif]-->
+			<ul>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 1</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 2</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 3</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 4</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 5</a></li>
+			</ul>
+			<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+	<!-- Navigation item -->
+	<ul>
+		<li><a href="#">Herramientas<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]><table><tr><td><![endif]-->
+			<ul>
+				<li><a href="../system/llave_adDI.php?sid=<?=$_SESSION['session_nombre_sesion']?>"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>adDI Key</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 2</a></li>
+				<li><a href="#"><img class="leftnoborder" src="../img/footpanel/plugin.png"/>Menu subitem 3</a></li>
+			</ul>
+			<!--[if lte IE 6]></td></tr></table></a><![endif]-->
+		</li>
+	</ul>
+	<!-- Navigation item -->
+	<ul>
+		<li><a href="../index.php?sid=<?=$_SESSION['session_nombre_sesion']?>">&#091;Desconectar&#093;<!--[if IE 7]><!--></a><!--<![endif]-->
+			<!--[if lte IE 6]></a><![endif]-->
+		</li>
+	</ul>
+</div>

@@ -1,0 +1,3 @@
+WEB -> refleja las visitas y accesos a las paginas en general
+ADMIN_USE -> refleja el uso de cada pagina del panel de administracion
+SYSTEM_USE -> refleja el uso de cada pagina del sistema

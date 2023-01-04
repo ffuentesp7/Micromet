@@ -1,0 +1,128 @@
+<?php
+	require('../aut_verifica.inc.php');
+	require('../funciones.inc.php');
+	require('../system/functions/statistic.functions.php');
+	estadisticas('WEB','PAGE_VIEW');
+	estadisticas('USER_USE','ESTACION_VER');
+	$ESTACION = getDataOfStation($_GET['eid']);
+	$INSTRUMENTS = getInstrumentsOfStation($ESTACION[0]);
+?>
+
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!--  Version: Multiflex-5.4 / Overview                     -->
+<!--  Date:    Nov 23, 2010                                 -->
+<!--  Design:  www.1234.info                                -->
+<!--  Modified:  roaguilar@utalca.cl                        -->
+<!--  License: Fully open source without restrictions.      -->
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=iso 8859-2" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="3600" />
+		<meta name="revisit-after" content="2 days" />
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="copyright" content="Micromet - Biovisión" />
+		
+		<meta name="distribution" content="global" />
+		<meta name="description" content="Electronic Visualisation Environment" />
+		<meta name="keywords" content="vizualizaci�n, agua, agricultura, agroclimatolog�a, climatolog�a" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_reset.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_grid.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_content.css" />
+		<link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+		<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+		<?php require_once('../head.link.script.php'); ?>	
+		<title>eVE - Electronic Visualisation Environment - Entorno de Visualizaci&oacute;n Electr&oacute;nico</title>
+		<script type="text/javascript">
+			stationName		= '<?=$ESTACION[1]?>';
+			stationLatitude 	= <?=$ESTACION[3]?>;
+			stationLongitude 	= <?=$ESTACION[4]?>;
+			stationID		= <?=$ESTACION[0]?>;
+			fh			= '<?=$ESTACION[6]?>';
+			fd			= '<?=cambia_fecha_a_mysql(add_days(cambia_fecha_a_normal($ESTACION[6]), -7))?>';
+			<?php 
+				$HTML = "html = '<div class=\"info_div\">'+";
+				$HTML.= "'<table class=\"blix\">'+";
+				$HTML.= "'<thead>'+";
+				$HTML.= "'<tr>'+";
+				$HTML.= "'<th></th>'+";
+				$HTML.= "'<th>Fecha</th>'+";
+				$HTML.= "'<th>Hora</th>'+";
+				$HTML.= "'<th>Valor</th>'+";
+				$HTML.= "'</tr>'+";
+				$HTML.= "'</thead>'+";
+				$HTML.= "'<tbody>'+";
+				
+				for($i = 0; $i < count($INSTRUMENTS); $i++){
+					$VALUES = getLastMeasurement($INSTRUMENTS[$i][0]);
+					$HTML.= "'<tr>'+";
+					$HTML.= "'<td>".$INSTRUMENTS[$i][1]."</td>'+";
+					$HTML.= "'<td>".cambia_fecha_a_normal($VALUES[1])."</td>'+";
+					$HTML.= "'<td>".$VALUES[2]."</td>'+";
+					$HTML.= "'<td>".$VALUES[0]."</td>'+";
+					$HTML.= "'</tr>'+";
+				}
+				$HTML.= "'</tbody>'+";
+				$HTML.= "'</table>'+";
+				$HTML.= "'</div>';";
+				
+				echo $HTML;
+				
+			?>
+			
+		</script>
+		<script type="text/javascript" src="js/estacion_ver.js"></script>
+	</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+	<body>
+		<!-- CONTAINER FOR ENTIRE PAGE -->
+		<div class="container">
+
+    			 <!-- B. NAVIGATION BAR -->
+			 <?php require('../system/navigation_bar.inc.php'); ?>   
+  
+			<!-- C. MAIN SECTION -->      
+			<div class="main">
+
+				<!-- C.1 CONTENT -->
+				<div class="content">
+					 <!-- CONTENT CELL -->                
+					<a id="anchor-heading-1"></a>
+					<div class="corner-content-1col-top"></div>                        
+					<div class="content-1col-nobox">
+						<h1 class="webtemplate" id="top_title"><?=$_GET['name']?></h1>
+						<h2>Ubicaci&oacute;n Geogr&aacute;fica:</h2>
+						<p id="StationMap" style="height: 450px; width: 590px; margin: 20px;"></p>
+						<p style="width: 590px; margin: 20px;">
+							<input type="button" class="button" value="Cargar Valles Vitivin&iacute;colas en el Mapa" style="width: auto;" onclick="load_valleys();"/>
+						</p>
+						<h2>&Uacute;ltimos datos:</h2>
+						<div id="tabla_datos" style="height: 450px; width: 630px; margin: 20px; overflow: auto;">
+							<img src="../img/loaders/loader-01.gif" class="centernoborder"/>
+						</div>
+					</div> 
+					<div class="corner-content-1col-bottom"></div>
+    				</div>
+    				<!-- C.2 SUBCONTENT-->
+				<div class="subcontent">
+					<!-- NAVIGATION SIDEBAR -->
+					<?php require('../system/navigation_sidebar.inc.php'); ?>   
+				</div>
+    				<!-- END OF CONTENT -->
+    			</div>
+			<!-- D. FOOTER -->      
+			<?php require('../footer.inc.php');?>       
+		</div>
+		<!-- D. FOOT PANEL --> 
+		<?php require('../system/footpanel.inc.php');?>
+	</body>
+</html>
+
+
+

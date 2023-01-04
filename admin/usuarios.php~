@@ -1,0 +1,263 @@
+<?php
+	require('../aut_verifica.inc.php');
+	require('../funciones.inc.php');
+	check_admin($_SESSION['session_nombre_sesion']);
+	estadisticas('WEB','PAGE_VIEW');
+	estadisticas('ADMIN_USE','USUARIOS');
+?>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<!--  Version: Multiflex-5.4 / Overview                     -->
+<!--  Date:    Nov 23, 2010                                 -->
+<!--  Design:  www.1234.info                                -->
+<!--  Modified:  roaguilar@utalca.cl                        -->
+<!--  License: Fully open source without restrictions.      -->
+	<head>
+  		<meta http-equiv="content-type" content="text/html; charset=iso 8859-2" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="3600" />
+		<meta name="revisit-after" content="2 days" />
+		<meta name="robots" content="index,follow" />
+		
+		<meta name="copyright" content="Micromet - Biovisión" />
+		
+		<meta name="distribution" content="global" />
+		<meta name="description" content="Electronic Visualisation Environment" />
+		<meta name="keywords" content="vizualizaci�n, agua, agricultura, agroclimatolog�a, climatolog�a" />
+		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_reset.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_grid.css" />
+  		<link rel="stylesheet" type="text/css" media="screen,projection,print" href="../css/mf54_content.css" />
+		<link rel="icon" type="image/x-icon" href="../img/favicon.ico" />
+		<?php require_once('../head.link.script.php'); ?>
+		<script src="usuarios.js" type="text/javascript"></script>
+		<title>eVE - Electronic Visualisation Environment - Entorno de Visualizaci&oacute;n Electr&oacute;nico</title>
+	</head>
+
+<!-- Global IE fix to avoid layout crash when single word size wider than column width -->
+<!-- Following line MUST remain as a comment to have the proper effect -->
+<!--[if IE]><style type="text/css"> body {word-wrap: break-word;}</style><![endif]-->
+
+	<body>
+		<!-- CONTAINER FOR ENTIRE PAGE -->
+		<div class="container">
+    
+    			 <!-- B. NAVIGATION BAR -->
+			 <?php require('../system/navigation_bar.inc.php'); ?>   
+  
+			<!-- C. MAIN SECTION -->      
+			<div class="main">
+
+				<!-- C.1 CONTENT -->
+				<div class="content">
+					 <!-- CONTENT CELL -->                
+					<a id="anchor-heading-1"></a>
+					<div class="corner-content-1col-top"></div>                        
+					<div class="content-1col-nobox">
+					
+						<?php
+						if($_GET['page'] == "main"){
+						?>
+						<h1 class="webtemplate" id="top_title">Administraci&oacute;n de Usuarios</h1>
+						<table style="width: auto; background-color: #fff;">
+							<tr>
+								<td class="whitenoborder"><a href="../admin/usuarios.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=add" onmouseover="javascript: swapText('top_title','Agregar Usuario');" onmouseout="javascript: swapText('top_title','Administraci&oacute;n de Usuarios');"><img class="blueborder" src="../img/actionicons/user_add.png" /></a></td>
+								<td class="whitenoborder"><p>Agregar Usuario</p></td>
+							</tr>
+						</table>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;BUSCAR USUARIO&nbsp;</legend>
+									<p>
+										<label for="querytext" class="left">Nombre:</label>
+										<input type="text" class="field" name="querytext" id="querytext" />
+									</p>
+								</fieldset>
+							</form>
+						</div>
+						<span id="mensaje"></span>
+						<span id="tabla"></span>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								var sid = $('#sid').val();
+								var url = 'usuarios.acciones.php?sid='+sid+'&accion=tabla&query=';
+								
+								$.get(url,'',function(data){
+									$('#tabla').html(data);
+								});
+								
+								$('#querytext').bind('keyup',function(e){
+									var query = $(this).val();
+									var url = 'usuarios.acciones.php?sid='+sid+'&accion=tabla&query='+query;
+									
+									$.get(url,'',function(data){
+										$('#tabla').html(data);
+									});
+								});
+								
+							});
+						</script>
+						<?php
+						}
+						else if($_GET['page'] == "add"){
+						?>
+						<h1 class="document" id="top_title">Agregar Usuario</h1>
+						<p><a href="../admin/usuarios.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<fieldset><legend>&nbsp;DATOS DE USUARIO&nbsp;</legend>
+									<p>
+										<label for="nombre_usuario" class="left">Nombre:</label>
+										<input type="text" name="nombre_usuario" id="nombre_usuario" class="field" value="" tabindex="4" />
+									</p>
+									<p>
+										<label for="rut_usuario" class="left">RUT:</label>
+										<input type="text" name="rut_usuario" id="rut_usuario" class="field" value="" tabindex="4" />
+									</p>
+									<p>
+										<label for="email_usuario" class="left">Email:</label>
+										<input type="text" name="email_usuario" id="email_usuario" class="field" value="" tabindex="4" />
+									</p>
+									<p>
+										<label for="tel_movil_usuario" class="left">Tel. M&oacute;vil:</label>
+										<input type="text" name="tel_movil_usuario" id="tel_movil_usuario" class="field" value="+569" tabindex="4" />
+									</p>
+									<p>
+										<label for="clave_usuario" class="left">Clave:</label>
+										<input type="text" name="clave_usuario" id="clave_usuario" class="field" value="<?php echo genpass();?>" tabindex="4" />
+									</p>
+									<p>
+										<label for="aviso_sensor_usuario" class="left">Aviso Sensor:</label>
+										<select name="aviso_sensor_usuario" id="aviso_sensor_usuario" class="combo">
+											<option value="0">NO</option>
+											<option value="1">SI</option>
+										</select>
+									</p>
+									<p>
+										<label for="administrador_usuario" class="left">Administrador:</label>
+										<select name="administrador_usuario" id="administrador_usuario" class="combo">
+											<option value="0">NO</option>
+											<option value="1">SI</option>
+										</select>
+									</p>
+									<p>
+										<label for="enviar_email_usuario" class="left">Enviar Email:</label>
+										<input type="checkbox" name="enviar_email_usuario" id="enviar_email_usuario" value="1" />
+									</p>
+									<p>
+										<input type="button" name="submit" id="submit_1" class="button" value="Agregar Usuario" tabindex="6" onclick="addUser()" />
+									</p>
+								</fieldset>
+							</form>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#rut_usuario').bind('blur',function(e){
+									if(!validaRut($(this).val(),'rut_usuario')){
+										$(this).val('');
+										alert('Por favor, ingrese un RUT v�lido');
+										$(this).focus();	
+									}
+								});
+							});
+						</script>
+						<?php
+						}
+						else if($_GET['page'] == "edit"){
+						
+							$ID = $_GET['userid'];
+							$SQL = "SELECT * FROM usuario WHERE id=$ID";
+							
+							$request_usuario = consulta_sql($SQL);
+							$datos_usuarios = mysqli_fetch_array($request_usuario);
+						
+						?>
+						<h1 class="document" id="top_title">Actualizar Usuario</h1>
+						<p><a href="../admin/usuarios.php?sid=<?=$_SESSION['session_nombre_sesion']?>&page=main">Volver</a></p>
+						<span id="mensaje"></span>
+						<div class="contactform">
+							<form>
+								<input type="hidden" value="<?=$ID?>" id="userid" />
+								<fieldset><legend>&nbsp;ACTUALIZAR DATOS DE USUARIO&nbsp;</legend>
+									<p>
+										<label for="nombre_usuario" class="left">Nombre:</label>
+										<input type="text" name="nombre_usuario" id="nombre_usuario" class="field" value="<?=$datos_usuarios['nombre']?>" tabindex="4" />
+									</p>
+									<p>
+										<label for="rut_usuario" class="left">RUT:</label>
+										<input type="text" name="rut_usuario" readonly="true" id="rut_usuario" class="field" value="<?=$datos_usuarios['rut']?>" tabindex="4" />
+									</p>
+									<p>
+										<label for="email_usuario" class="left">Email:</label>
+										<input type="text" name="email_usuario" id="email_usuario" class="field" value="<?=$datos_usuarios['email']?>" tabindex="4" />
+									</p>
+									<p>
+										<label for="tel_movil_usuario" class="left">Tel. M&oacute;vil:</label>
+										<input type="text" name="tel_movil_usuario" id="tel_movil_usuario" class="field" value="<?=$datos_usuarios['telefono_movil']?>" tabindex="4" />
+									</p>
+									<p>
+										<label for="aviso_sensor_usuario" class="left">Aviso Sensor:</label>
+										<select name="aviso_sensor_usuario" id="aviso_sensor_usuario" class="combo">
+											<option value="0" <?php if($datos_usuarios['aviso_sensor'] == 0) echo 'selected="selected"'?>>NO</option>
+											<option value="1" <?php if($datos_usuarios['aviso_sensor'] == 1) echo 'selected="selected"'?>>SI</option>
+										</select>
+									</p>
+									<p>
+										<label for="administrador_usuario" class="left">Administrador:</label>
+										<select name="administrador_usuario" id="administrador_usuario" class="combo">
+											<option value="0" <?php if($datos_usuarios['administrador'] == 0) echo 'selected="selected"'?>>NO</option>
+											<option value="1" <?php if($datos_usuarios['administrador'] == 1) echo 'selected="selected"'?>>SI</option>
+										</select>
+									</p>
+									<p>
+										<input type="button" name="submit" id="submit_1" class="button" style="width: 180px;" value="Actualizar Usuario" tabindex="6" onclick="updateUser()" />
+									</p>
+								</fieldset>
+							</form>
+							<form>
+								<fieldset><legend>&nbsp;ACTUALIZAR CLAVE DE USUARIO&nbsp;</legend>
+									<p>
+										<label for="clave_usuario" class="left">Clave:</label>
+										<input type="text" name="clave_usuario" id="clave_usuario" class="field" value="<?php echo genpass();?>" tabindex="4" />
+									</p>
+									<p>
+										<input type="button" name="submit" id="submit_1" class="button" style="width: 280px;" value="Actualizar Clave de Usuario" tabindex="6" onclick="updatePassUser()" />
+									</p>
+								</fieldset>
+							</form>
+						</div>
+						<script type="text/javascript">
+							$(document).ready(function(){
+								$('#rut_usuario').bind('blur',function(e){
+									if(!validaRut($(this).val(),'rut_usuario')){
+										$(this).val('');
+										alert('Por favor, ingrese un RUT v�lido');
+										$(this).focus();	
+									}
+								});
+							});
+						</script>
+						<?php
+						}
+						?>
+					</div> 
+					<div class="corner-content-1col-bottom"></div>
+    				</div>
+    				<!-- C.2 SUBCONTENT-->
+				<div class="subcontent">
+					<!-- NAVIGATION SIDEBAR -->
+					<?php require('../system/navigation_sidebar.inc.php'); ?>   
+				</div>
+    				<!-- END OF CONTENT -->
+    			</div>
+			<!-- D. FOOTER -->      
+			<?php require('../footer.inc.php');?>       
+		</div>
+		<!-- D. FOOT PANEL --> 
+		<?php require('../system/footpanel.inc.php');?>
+	</body>
+</html>
+
+
+

@@ -1,0 +1,32 @@
+blockquote {
+	background:rgb(230,230,230);
+	height: 40px;
+	
+}
+
+blockquote.warning {
+	background: url(../img/msgbox/warning.png) no-repeat rgb(179,202,239); 
+	background-position:5px 5px;
+}
+
+blockquote.warning p{
+	padding: 10px 0 0 40px;
+}
+
+blockquote.error {
+	background: url(../img/msgbox/error.png) no-repeat rgb(255,154,0); 
+	background-position:5px 5px;
+}
+
+blockquote.error p{
+	padding: 10px 0 0 40px;
+}
+
+blockquote.done {
+	background: url(../img/msgbox/accept.png) no-repeat rgb(255,154,0); 
+	background-position:5px 5px;
+}
+
+blockquote.done p{
+	padding: 10px 0 0 40px;
+}

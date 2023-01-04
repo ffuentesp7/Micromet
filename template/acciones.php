@@ -1,0 +1,15 @@
+<?php
+	require('../aut_verifica.inc.php');
+	require('../funciones.inc.php');
+	check_admin($_SESSION['session_nombre_sesion']);
+
+	$ACCION = $_GET['accion'];
+	
+	if($ACCION == ""){
+	
+	}
+	else{
+	
+	}
+
+?>

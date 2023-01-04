@@ -1,0 +1,114 @@
+#footpanel {
+	position: fixed;
+	bottom: 0; left: 0;
+	z-index: 9999; /*--Keeps the panel on top of all other elements--*/
+	background: #e3e2e2;
+	border: 1px solid #c3c3c3;
+	border-bottom: none;
+	width: 94%;
+	margin: 0 3%;
+}
+
+*html #footpanel { /*--IE6 Hack - Fixed Positioning to the Bottom--*/
+	margin-top: -1px; /*--Prevents IE6 from having an infinity scroll bar - due to 1px border on #footpanel--*/
+	position: absolute;
+	top:expression(eval(document.compatMode &&document.compatMode=='CSS1Compat') ?documentElement.scrollTop+(documentElement.clientHeight-this.clientHeight) : document.body.scrollTop +(document.body.clientHeight-this.clientHeight));
+}
+
+#footpanel ul {
+	padding: 0; margin: 0;
+	float: left;
+	width: 100%;
+	list-style: none;
+	border-top: 1px solid #fff; /*--Gives the bevel feel on the panel--*/
+	font-size: 1.1em;
+}
+#footpanel ul li{
+	padding: 0; margin: 0;
+	float: left;
+	position: relative;
+}
+#footpanel ul li a{
+	padding: 5px;
+	float: left;
+	text-indent: -9999px; /*--For text replacement - Shove text off of the page--*/
+	height: 16px; width: 16px;
+	text-decoration: none;
+	color: #333;
+	position: relative;
+}
+html #footpanel ul li a:hover{	background-color: #fff; }
+html #footpanel ul li a.active { /*--Active state when sub-panel is open--*/
+	background-color: #fff;
+	height: 17px;
+	margin-top: -2px; /*--Push it up 2px to attach the active button to sub-panel--*/
+	border: 1px solid #555;
+	border-top: none;
+	z-index: 200; /*--Keeps the active link on top of the sub-panel--*/
+	position: relative;
+}
+
+#footpanel a.home{
+	background: url(../img/footpanel/home.png) no-repeat 15px center;
+	width: 50px;
+	padding-left: 40px;
+	border-right: 1px solid #bbb;
+	text-indent: 0; /*--Reset text indent since there will be a combination of both text and image--*/
+}
+a.profile{ background: url(user.png) no-repeat center center;  }
+a.editprofile{ background: url(../img/footpanel/user.png) no-repeat center center; }
+a.contacts{ background: url(address_book.png) no-repeat center center; }
+a.messages{ background: url(../img/footpanel/mail.png) no-repeat center center; }
+a.adminpanel{ background: url(../img/footpanel/settings.png) no-repeat center center; }
+a.adduser{ background: url(../img/footpanel/user-plus.png) no-repeat center center; }
+a.log{ background: url(../img/footpanel/log.png) no-repeat center center; }
+a.chart{ background: url(../img/footpanel/chart.png) no-repeat center center; }
+a.key{ background: url(../img/footpanel/key.png) no-repeat center center; }
+a.videos{ background: url(film.png) no-repeat center center; }
+a.salir{ background: url(../img/footpanel/plug-disconnect.png) no-repeat center center; }
+#footpanel ul li.division {
+	border-right: 1px solid #bbb;
+	height: 100%;
+}
+
+#footpanel a.texto{
+	width: auto;
+	padding-left: 40px;
+	border-right: 1px solid #bbb;
+	text-indent: 0; /*--Reset text indent since there will be a combination of both text and image--*/
+}
+
+#footpanel a.chat{
+	background: url(balloon.png) no-repeat 15px center;
+	width: 126px;
+	border-left: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+	padding-left: 40px;
+	text-indent: 0; /*--Reset text indent since there will be a combination of both text and image--*/
+}
+
+#footpanel li#chatpanel, #footpanel li#alertpanel {	float: right; }  /*--Right align the chat and alert panels--*/
+
+#footpanel a small {
+	text-align: center;
+	width: 70px;
+	background: url(../img/footpanel/pop_arrow.gif) no-repeat center bottom;
+	padding: 5px 5px 11px;
+	display: none; /*--Hide by default--*/
+	color: #fff;
+	font-size: 1em;
+	text-indent: 0;
+}
+#footpanel a:hover small{
+	display: block; /*--Show on hover--*/
+	position: absolute;
+	top: -35px; /*--Position tooltip 35px above the list item--*/
+	left: 50%;
+	margin-left: -40px; /*--Center the tooltip--*/
+	z-index: 9999;
+}
+
+.text-container{
+	margin: 0px 1px 15px 1px;
+	padding: 0px 0px 15px 0px;
+}

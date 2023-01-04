@@ -1,0 +1,227 @@
+/**
+ * jQuery gMap
+ *
+ * @url		http://gmap.nurtext.de/
+ * @author	Cedric Kastner <cedric@nur-text.de>
+ * @author	Rodrigo Aguilar <roaguilar@utalca.cl>, modify by version 3 of Google Maps
+ * @version	3.0.0
+ */
+(function($)
+{
+	// Main plugin function
+	$.fn.gMap = function(options)
+	{
+		// Check if the browser is compatible
+		if (!window.GBrowserIsCompatible || !GBrowserIsCompatible()) return this;
+		
+		// Build main options before element iteration
+		var opts = $.extend({}, $.fn.gMap.defaults, options);
+    	
+		// Iterate through each element
+		return this.each(function()
+		{
+			// Create map and set initial options
+			$gmap = new google.maps.Map(this);
+			
+			// Create new object to geocode addresses
+			$geocoder = new google.maps.Geocoder();
+			
+			// Check for address to center on
+			if (opts.address)
+			{ 
+				// Get coordinates for given address and center the map
+				$geocoder.geocode(opts.address, function(results,status){ 
+					if (status == google.maps.GeocoderStatus.OK) {
+        					$gmap.setCenter(results[0].geometry.location);
+        				}
+				});
+				
+			}
+			else
+			{
+				// Check for coordinates to center on
+				if (opts.latitude && opts.longitude)
+				{
+					// Center map to coordinates given by option
+					$gmap.setCenter(new google.maps.LatLng(opts.latitude, opts.longitude), opts.zoom);
+					
+				}
+				else
+				{
+					// Check for a marker to center on (if no coordinates given)
+					if ($.isArray(opts.markers) && opts.markers.length > 0)
+					{
+						// Check if the marker has an address
+						if (opts.markers[0].address)
+						{
+							// Get the coordinates for given marker address and center
+							$geocoder.geocode(opts.markers[0].address, function(results,status){ 
+								if (status == google.maps.GeocoderStatus.OK) {
+									$gmap.setCenter(results[0].geometry.location);
+								}
+							});
+							
+						}
+						else
+						{
+							// Center the map to coordinates given by marker
+							$gmap.setCenter(new google.maps.LatLng(opts.markers[0].latitude, opts.markers[0].longitude), opts.zoom);
+							
+						}
+						
+						
+					}
+					else
+					{
+						// Revert back to world view
+						$gmap.setCenter(new google.maps.LatLng(34.885931, 9.84375), opts.zoom);
+						
+					}
+					
+				}
+				
+			}
+			
+			mapTypeID = 0;
+			if(opts.maptype == 'HYBRID')
+				mapTypeID = google.maps.MapTypeId.HYBRID;
+			else if(opts.maptype == 'ROADMAP')
+				mapTypeID = google.maps.MapTypeId.ROADMAP;
+			else if(opts.maptype == 'SATELLITE')
+				mapTypeID = google.maps.MapTypeId.SATELLITE;
+			else if(opts.maptype == 'TERRAIN')
+				mapTypeID = google.maps.MapTypeId.TERRAIN;
+			
+			// Set the preferred map type
+			$gmap.setMapTypeId(mapTypeID);
+			
+			// Check for map controls
+			if (opts.controls.length == 0)
+			{
+				// Default map controls
+				$gmap.disableDefaultUI = false;
+				
+			}
+			else
+			{
+				// Add custom map controls
+				$gmap.disableDefaultUI = true;
+				for (var i = 0; i < opts.controls.length; i++)
+				{
+					// Eval is evil
+					eval('$gmap.' + opts.controls[i][0] + ' = ' + opts.controls[i][1] + ';');
+					
+				}
+				
+			}
+						
+			// Check if scrollwheel should be enabled
+			if (opts.scrollwheel == true && opts.controls.length != 0) { $gmap.scrollwheel = true; }
+									
+			// Loop through marker array
+			for (var j = 0; j < opts.markers.length; j++)
+			{
+				// Get the options from current marker
+				marker = opts.markers[j];
+								
+				gicon = null;
+				
+				// Set icon properties from global options
+				gicon = new google.maps.MarkerImage(opts.icon.image);
+				gicon.size = new google.maps.Size(opts.icon.size[0], opts.icon.size[1]);
+				gicon.anchor = new google.maps.Point(opts.icon.anchor[0], opts.icon.anchor[1]);
+				
+				if (marker.icon)
+				{
+					// Overwrite global options
+					gicon = new google.maps.MarkerImage(marker.icon.image);
+					gicon.size = new google.maps.Size(marker.icon.size[0], marker.icon.size[1]);
+					gicon.anchor = new google.maps.Point(marker.icon.anchor[0], marker.icon.anchor[1]);
+					
+				}
+				
+				// Check if address is available
+				if (marker.address)
+				{
+					// Check for reference to the marker's address
+					if (marker.html == '_address') { marker.html = marker.address; }
+					
+					// Get the point for given address
+					$geocoder.geocode(marker.address, function(gicon, marker)
+					{
+						// Since we're in a loop, we need a closure when dealing with event handlers, return functions, etc.
+						// See <http://www.mennovanslooten.nl/blog/post/62> for more information about closures
+						return function(gpoint)
+						{
+							// Create marker
+							gmarker = new GMarker(gpoint, gicon);
+							
+							// Set HTML and check if info window should be opened
+							if (marker.html) { gmarker.bindInfoWindowHtml(opts.html_prepend + marker.html + opts.html_append); }
+							if (marker.html && marker.popup) { gmarker.openInfoWindowHtml(opts.html_prepend + marker.html + opts.html_append); }
+							
+							// Add marker to map
+							if (gmarker) { $gmap.addOverlay(gmarker); }
+						}
+						
+					}(gicon, marker));
+					$geocoder.geocode(marker.address, function(results,status){ 
+						if (status == google.maps.GeocoderStatus.OK) {
+						
+							gmarkerOptions = {
+								icon : gicon,
+								map : $gmap,
+								position: results[0].geometry.location,
+								title: marker.html
+							}
+						
+							gmarker = new google.maps.Marker(gmarkerOptions);
+						}
+					});
+				}
+				else
+				{
+					// Check for reference to the marker's latitude/longitude
+					if (marker.html == '_latlng') { marker.html = marker.latitude + ', ' + marker.longitude; }
+					
+					// Create marker
+					gmarker = new GMarker(new GPoint(marker.longitude, marker.latitude), gicon);
+					
+					// Set HTML and check if info window should be opened
+					if (marker.html) { gmarker.bindInfoWindowHtml(opts.html_prepend + marker.html + opts.html_append); }
+					if (marker.html && marker.popup) { gmarker.openInfoWindowHtml(opts.html_prepend + marker.html + opts.html_append); }
+						
+					// Add marker to map
+					if (gmarker) { $gmap.addOverlay(gmarker); }
+					
+				}
+				
+			}
+			
+		});
+		
+	}
+		
+	// Default settings
+	$.fn.gMap.defaults =
+	{
+		address:				'',
+		latitude:				0,
+		longitude:				0,
+		zoom:					1,
+		markers:				[],
+		controls:				[],
+		scrollwheel:			true,
+		maptype:			'SATELLITE',
+		html_prepend:			'<div class="gmap_marker">',
+		html_append:			'</div>',
+		icon:
+		{
+			image:			"http://www.google.com/mapfiles/marker.png",
+			size:			[20, 34],
+			anchor:			[9, 34]			
+		}
+		
+	}
+	
+})(jQuery);

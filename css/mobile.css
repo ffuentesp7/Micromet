@@ -1,0 +1,21 @@
+body {
+	background: #eee;
+	text-align: center;
+	font-size: 20px;
+}
+
+h2 {
+	background: #89A727;
+	border: #ADD332 solid 1px;
+	color: #fff;
+	text-align: center;
+	height: 32px;
+	font-size: 26px;
+	padding: 3px;
+}
+
+li {
+	display:block; 
+	list-style:none;
+	margin-left:-50px;
+}

@@ -1,0 +1,28 @@
+<?php
+
+/* Start session and load library. */
+session_start();
+require_once('twitteroauth/twitteroauth.php');
+require_once('config.php');
+
+/* Build TwitterOAuth object with client credentials. */
+$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET);
+ 
+/* Get temporary credentials. */
+//$request_token = $connection->getRequestToken(OAUTH_CALLBACK);
+
+/* Save temporary credentials to session. */
+$_SESSION['oauth_token'] = '185747889-I1WKay7XIdySc0HcaYsC1udO0CRQ4xJtQdvh0e4U';
+$_SESSION['oauth_token_secret'] = 'ebt3pZTQIZ3t5la0TjRrGfhBhZqa2SzoaqAlXck9E';
+ 
+/* If last connection failed don't display authorization link. */
+switch ($connection->http_code) {
+  case 200:
+    /* Build authorize URL and redirect user to Twitter. */
+    $url = $connection->getAuthorizeURL($token);
+    header('Location: ' . $url); 
+    break;
+  default:
+    /* Show notification if something went wrong. */
+    echo 'Could not connect to Twitter. Refresh the page or try again later.';
+}

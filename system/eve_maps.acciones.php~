@@ -1,0 +1,86 @@
+<?php
+	
+	require('../funciones.inc.php');
+	require('functions/statistic.functions.php');
+	
+	$ACCION = $_GET['accion'];
+	
+	if($ACCION == "get_station_live_data"){
+		
+		$INSTRUMENTS = getInstrumentsOfStation($_GET['eid']);
+		$LASTM = getLastMeasurementStation($_GET['eid']);
+		$HOURDATE = add_seconds($LASTM[2],$LASTM[1],-7200);
+		$DATE_FROM = $HOURDATE[1];
+		$DATE_TO = $LASTM[1];
+		$HOUR_FROM = $HOURDATE[0];
+		$HOUR_TO = $LASTM[2];	
+		
+		$HTML.='<table class="mediagrove" style="width: 100%;">';
+		$HTML.='<thead>';
+		$HTML.='<tr>';
+		$HTML.='<th>Fecha</th>';
+		$HTML.='<th>Hora</th>';
+		
+		$L = count($INSTRUMENTS);
+		for($i = 0; $i < $L ; $i++){
+			$HTML.='<th>'.$INSTRUMENTS[$i][1].' ('.$INSTRUMENTS[$i][3].')</th>';
+		}
+		$HTML.='</tr>';
+		$HTML.='</thead>';
+		$HTML.="<tbody>";
+			
+		
+		$SQL = 'SELECT med0.fecha, med0.hora ';
+		$L = count($INSTRUMENTS);
+		for($i = 0; $i < $L ; $i++){
+			$SQL.=", med$i.medicion";
+		}
+		$SQL.=" FROM";
+		
+		for($i = 0; $i < $L ; $i++){
+			if($i != 0)
+				$SQL.=", medicion AS med$i";
+			else
+				$SQL.=" medicion AS med$i";
+		}
+		
+		$SQL.=" WHERE med0.fecha >= '$DATE_FROM' AND med0.fecha <= '$DATE_TO' AND med0.hora >= '$HOUR_FROM' AND med0.hora <= '$HOUR_TO'";
+		
+		for($i = 0; $i < ($L-1) ; $i++){
+			$SQL.=" AND med$i.fecha = med".($i+1).".fecha AND med$i.hora = med".($i+1).".hora";
+		}
+		
+		for($i = 0; $i < $L ; $i++){
+			$SQL.=" AND med$i.instrumento_id = ".$INSTRUMENTS[$i][0];
+		}
+		
+		$SQL.=" ORDER BY med0.fecha DESC, med0.hora DESC LIMIT 4";
+		
+		//$HTML=$SQL;
+		
+		$RES_DATA = consulta_sql($SQL);
+		
+		for($j = 0; $DATA = mysqli_fetch_array($RES_DATA); $j++){
+			if($j%2 == 0)
+				$HTML.="<tr>";
+			else
+				$HTML.="<tr class='odd'>";
+			$HTML.="<td style='width: 70px;'>".cambia_fecha_a_normal($DATA[0])."</td>";
+			$HTML.="<td style='width: 60px;'>".$DATA[1]."</td>";
+			
+			for($i = 2; $i < ($L+2) ; $i++){
+				$HTML.="<td>".number_format($DATA[$i], 1, '.', '')."</td>";
+			}
+			
+			$HTML.="</tr>";
+		}
+		$HTML.="</tbody>";
+		$HTML.='</table>';
+		
+		echo $HTML;
+	}
+	else{
+	
+	}
+
+?>

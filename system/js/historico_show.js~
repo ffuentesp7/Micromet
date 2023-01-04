@@ -1,0 +1,16 @@
+offset = 1;
+loadingData = false;
+$(document).ready(function(e){
+	$(window).scroll(function(){
+		if (!loadingData && $(window).scrollTop() == $(document).height() - $(window).height()){
+			loadingData = true;
+			loading('Cargando Datos');
+			$.get(url2+'&offset='+offset,'',function(data){
+				$('#body_table').append(data);
+				offset=offset+1;
+				stopLoading();
+				loadingData = false;
+			});
+		}
+	});	
+});

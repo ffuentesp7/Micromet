@@ -1,0 +1,112 @@
+$(document).ready(function(e){
+	get_select_station();
+	$('#fecha_desde').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true,
+		maxDate: new Date()
+		
+	});
+	$('#fecha_hasta').datepicker({
+		dateFormat : "yy-mm-dd",
+		showAnim : "blind",
+		changeMonth: true,
+		changeYear: true,
+		maxDate: new Date()
+	});
+	$('#select_detalle').bind('change',function(){
+		get_data_type_available();
+	});
+});
+
+function get_select_station(){
+	var sid = $('#sid').val();
+	
+	var url = 'historico.acciones.php?sid='+sid+'&accion=get_select_stations';
+	
+	$.get(url,'',function(data){
+		$('#select_estacion_field').html(data);
+		$('#select_estacion').bind('change',function(){
+			get_data_type_available();
+		});
+	});
+}
+
+function get_data(){
+	var sid = $('#sid').val();
+	var station = $('#select_estacion option:selected').val();
+	var stationName = $('#select_estacion option:selected').html();
+	var fd = $('#fecha_desde').val();
+	var fh = $('#fecha_hasta').val();
+	var detalle = $('#select_detalle option:selected').val();
+	var separador = $('#select_separador option:selected').val();
+	var filas = $('#select_filas option:selected').val();
+	
+	variables = new Array();
+	i = 0;
+	$('#data_type:checked').each(function(){
+		valor = $(this).val().split('_');
+		variables[i] = valor;
+		if(detalle == 'diario')
+			variables[i][3] = $(this).attr('title');
+		else
+			variables[i][2] = $(this).attr('title');
+		i++;
+	});
+	
+	var typesToGet = JSON.stringify(variables);
+
+	if(station == 0){
+		alert('Debe seleccionar una estacion');
+		return;
+	}
+	
+	if(Date.parse(fd) > Date.parse(fh)){
+		alert('Fecha Desde debe ser anterior a Fecha Hasta');
+		return;
+	}
+	postForm = $('<form></form>').attr('action','csv.php?sid='+sid).attr('target','_blank').attr('method','post').css('display','none').appendTo('body');
+	
+	inAcc = $('<input></input>').attr('type','hidden').attr('name','accion').attr('value','get_data_station');
+	inSta = $('<input></input>').attr('type','hidden').attr('name','sta').attr('value',station);
+	inFd = $('<input></input>').attr('type','hidden').attr('name','fd').attr('value',fd);
+	inFh = $('<input></input>').attr('type','hidden').attr('name','fh').attr('value',fh);
+	inDet = $('<input></input>').attr('type','hidden').attr('name','det').attr('value',detalle);
+	inTyp = $('<input></input>').attr('type','hidden').attr('name','types').attr('value',typesToGet);
+	inSep = $('<input></input>').attr('type','hidden').attr('name','sep').attr('value',separador);
+	inFil = $('<input></input>').attr('type','hidden').attr('name','fil').attr('value',filas);
+	
+	postForm.append(inAcc).append(inSta).append(inFd).append(inFh).append(inDet).append(inTyp).append(inSep).append(inFil);
+	
+	postForm.submit();
+	
+	//var url = 'csv.php?sid='+sid+'&accion=get_data_station&sta='+station+'&fd='+fd+'&fh='+fh+'&det='+detalle+'&types='+typesToGet;
+	//alert(url.length);
+	//window.open(url);
+	
+}
+
+function get_data_type_available(){
+	var sid = $('#sid').val();
+	var station = $('#select_estacion option:selected').val();
+	var fd = $('#fecha_desde').val();
+	var fh = $('#fecha_hasta').val();
+	var detalle = $('#select_detalle option:selected').val();
+	
+	if(station == 0){
+		alert('Debe seleccionar una estacion');
+		return;
+	}
+	
+	if(Date.parse(fd) > Date.parse(fh)){
+		alert('Fecha Desde debe ser anterior a Fecha Hasta');
+		return;
+	}
+	
+	var url = 'historico.acciones.php?sid='+sid+'&accion=get_data_type_available&sta='+station+'&det='+detalle;
+	$('#tipos_de_datos_disponibles').html('<img src="../img/loaders/loader-01.gif" class="leftnoborder"/>');
+	$.get(url,'',function(data){
+		$('#tipos_de_datos_disponibles').html(data);
+	});
+}
